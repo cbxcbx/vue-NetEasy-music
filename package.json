@@ -43,7 +43,16 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "eol-last": 0,
+      "space-before-function-paren": 0,
+      "semi": [
+        0,
+        "always"
+      ],
+      "quotes": 0,
+      "prefer-const": "off"
+    }
   },
   "browserslist": [
     "> 1%",
