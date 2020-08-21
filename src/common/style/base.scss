@@ -1,0 +1,8 @@
+@import './variable.scss';
+
+html,
+body {
+  font-family: 'Overpass';
+  font-weight: normal;
+  background-color: $bg-color;
+}
