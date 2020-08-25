@@ -1,6 +1,9 @@
 <template>
   <div class="welcome">
     <div class="welcome-top">
+      <div class="avatar-container">
+        <img src="./avatar.jpg" />
+      </div>
       <div class="text-container">
         <p class="title">Add Your</p>
         <p class="text">Music</p>
@@ -31,7 +34,7 @@ export default {
     return {
       currentIndex: 0,
       pagination: [{ id: 1 }, { id: 2 }, { id: 3 }]
-    }
+    };
   }
 };
 </script>
@@ -52,7 +55,19 @@ export default {
   .welcome-top {
     flex: 0 0 50%;
 
+    .avatar-container {
+      margin: 50px 20px 0 0;
+      overflow: hidden;
+      img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        float: right;
+      }
+    }
+
     .text-container {
+      clear: both;
       .title {
         margin-bottom: 10px;
         font-size: 30px;
