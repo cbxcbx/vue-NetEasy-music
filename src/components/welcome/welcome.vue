@@ -4,12 +4,12 @@
       <div class="avatar-container">
         <img src="./avatar.jpg" />
       </div>
+    </div>
+    <div class="welcome-middle">
       <div class="text-container">
         <p class="title">Add Your</p>
         <p class="text">Music</p>
       </div>
-    </div>
-    <div class="welcome-middle">
       <img src="./people.png" />
     </div>
     <div class="welcome-bottom">
@@ -21,7 +21,7 @@
           :key="index"
         ></span>
       </div>
-      <div class="btn-skip-wrapper">
+      <div class="btn-skip-wrapper" @click="goToRelcome">
         <span class="btn btn-skip">skip</span>
       </div>
     </div>
@@ -33,8 +33,19 @@ export default {
   data() {
     return {
       currentIndex: 0,
-      pagination: [{ id: 1 }, { id: 2 }, { id: 3 }]
+      pagination: [{
+        id: 1
+      }, {
+        id: 2
+      }, {
+        id: 3
+      }]
     };
+  },
+  methods: {
+    goToRelcome() {
+      this.$router.push('/recommend');
+    }
   }
 };
 </script>
@@ -53,21 +64,30 @@ export default {
   justify-content: flex-end;
 
   .welcome-top {
-    flex: 0 0 50%;
+    flex: 0 0 110px;
 
     .avatar-container {
       margin: 50px 20px 0 0;
-      overflow: hidden;
+      text-align: right;
+
       img {
         width: 60px;
         height: 60px;
         border-radius: 50%;
-        float: right;
       }
     }
+  }
+
+  .welcome-middle {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 
     .text-container {
-      clear: both;
+      margin-left: 20px;
+      padding-top: 100px;
+      flex: 1;
+
       .title {
         margin-bottom: 10px;
         font-size: 30px;
@@ -80,10 +100,7 @@ export default {
         font-weight: bold;
       }
     }
-  }
 
-  .welcome-middle {
-    flex: 0 0 30%;
     img {
       display: block;
       margin: 0 auto;
@@ -92,7 +109,7 @@ export default {
   }
 
   .welcome-bottom {
-    flex: 1;
+    flex: 0 0 120px;
     padding: 20px;
 
     .pagination {
@@ -107,6 +124,7 @@ export default {
         height: 8px;
         border-radius: 50%;
         background-color: rgba(0, 0, 0, 0.2);
+
         &.active {
           width: 20px;
           border-radius: 5px;
