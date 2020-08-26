@@ -1,14 +1,21 @@
 <template>
   <div class="nav">
-    <router-link tag="div" class="nav-item" to="/recommend">
-      <span class="nav-link">Recommend</span>
-    </router-link>
-    <router-link tag="div" class="nav-item" to="/singer">
-      <span class="nav-link">Singer</span>
-    </router-link>
-    <router-link tag="div" class="nav-item" to="/rank">
-      <span class="nav-link">Rank</span>
-    </router-link>
+    <div class="nav-content">
+      <div class="search-container">
+        <input type="text" />
+      </div>
+      <div class="nav-list">
+        <div class="nav-item">
+          <router-link tag="span" class="nav-icon iconfont icon-yinle" to="/recommend"></router-link>
+        </div>
+        <div class="nav-item">
+          <router-link tag="span" class="nav-icon iconfont icon-paihang" to="/rank"></router-link>
+        </div>
+        <div class="nav-item">
+          <router-link tag="span" class="nav-icon iconfont icon-flyme_icon-" to="/singer"></router-link>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -25,12 +32,37 @@ export default {};
   left: 0;
   right: 0;
   z-index: 10;
-  display: flex;
   background-color: $light-orange;
-  height: 100px;
+  height: 80px;
   border-radius: 25px 25px 0 0;
-  .nav-item {
-    flex: 1;
+
+  .nav-content {
+    display: flex;
+    padding: 23px 10px 0 40px;
+
+    .search-container {
+      width: 30%;
+      input {
+        width: 100%;
+      }
+    }
+
+    .nav-list {
+      display: flex;
+      justify-content: center;
+      width: 70%;
+
+      .nav-item {
+        flex: 1;
+        color: $white;
+        text-align: center;
+      }
+
+      .nav-icon {
+        font-size: $font-size-large-x;
+        font-weight: bold;
+      }
+    }
   }
 }
 </style>

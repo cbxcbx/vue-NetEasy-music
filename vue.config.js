@@ -9,6 +9,7 @@ module.exports = {
       alias: {
         // api: resolve('src/api'),
         // base: resolve('src/base'),
+        assets: resolve('src/assets'),
         common: resolve('src/common'),
         '@': resolve('src/components')
       }

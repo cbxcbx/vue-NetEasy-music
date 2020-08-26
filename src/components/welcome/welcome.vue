@@ -59,6 +59,7 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 11;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -128,7 +129,7 @@ export default {
         &.active {
           width: 20px;
           border-radius: 5px;
-          background-color: $orange;
+          background-color: $light-orange;
         }
       }
     }
