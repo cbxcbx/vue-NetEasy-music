@@ -1,22 +1,25 @@
 <template>
-  <div class="nav">
-    <div class="nav-content">
-      <div class="search-container">
-        <input type="text" />
-      </div>
-      <div class="nav-list">
-        <div class="nav-item">
-          <router-link tag="span" class="nav-icon iconfont icon-yinle" to="/recommend"></router-link>
+  <transition name="nav" appear>
+    <div class="nav">
+      <div class="nav-content">
+        <div class="search-container">
+          <span class="iconfont icon-chazhao"></span>
+          <input type="text" placeholder="Search" />
         </div>
-        <div class="nav-item">
-          <router-link tag="span" class="nav-icon iconfont icon-paihang" to="/rank"></router-link>
-        </div>
-        <div class="nav-item">
-          <router-link tag="span" class="nav-icon iconfont icon-flyme_icon-" to="/singer"></router-link>
+        <div class="nav-list">
+          <div class="nav-item">
+            <router-link tag="span" class="nav-icon iconfont icon-yinle" to="/recommend"></router-link>
+          </div>
+          <div class="nav-item">
+            <router-link tag="span" class="nav-icon iconfont icon-paihang" to="/rank"></router-link>
+          </div>
+          <div class="nav-item">
+            <router-link tag="span" class="nav-icon iconfont icon-flyme_icon-" to="/singer"></router-link>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -25,6 +28,16 @@ export default {};
 
 <style lang="scss" scoped>
 @import "common/style/variable.scss";
+
+.nav-enter-active,
+.nav-leave-active {
+  transition: all 0.5s;
+}
+
+.nav-enter, .nav-leave-to {
+  transform: translateY(100%);
+  opacity: 0;
+}
 
 .nav {
   position: fixed;
@@ -38,19 +51,41 @@ export default {};
 
   .nav-content {
     display: flex;
-    padding: 23px 10px 0 40px;
+    padding: 15px 10px 0 40px;
 
     .search-container {
+      position: relative;
       width: 30%;
+
+      .icon-chazhao {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        color: $white;
+        font-size: 20px;
+        transform: translateY(-50%);
+      }
+
       input {
         width: 100%;
+        height: 35px;
+        padding-left: 35px;
+        border: none;
+        outline: none;
+        border-radius: 15px;
+        background-color: #f29a67;
+        color: $white;
+        &::placeholder {
+          color: $white;
+        }
       }
     }
 
     .nav-list {
       display: flex;
-      justify-content: center;
       width: 70%;
+      justify-content: center;
+      align-items: center;
 
       .nav-item {
         flex: 1;
