@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Nav></Nav>
+    <Nav v-show="isLogin"></Nav>
     <keep-alive>
       <router-view />
     </keep-alive>
@@ -9,7 +9,11 @@
 
 <script>
 import Nav from "@/nav/nav";
+import { mapGetters } from "vuex";
 export default {
+  computed: {
+    ...mapGetters(["isLogin"])
+  },
   components: {
     Nav
   }

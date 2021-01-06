@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Homepage from '@/homepage/homepage'
 import Welcome from '@/welcome/welcome.vue'
 import Recommend from '@/recommend/recommend.vue'
 import Singer from '@/singer/singer.vue'
@@ -10,12 +11,17 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/recommend'
+    redirect: '/homepage'
   },
   {
     path: '/welcome',
     name: 'Welcome',
     component: Welcome
+  },
+  {
+    path: '/homepage',
+    name: 'Homepage',
+    component: Homepage
   },
   {
     path: '/recommend',

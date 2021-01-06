@@ -21,8 +21,8 @@
           :key="index"
         ></span>
       </div>
-      <div class="btn-skip-wrapper" @click="goToRelcome">
-        <span class="btn btn-skip">skip</span>
+      <div class="btn-skip-wrapper" @click="goToRecommend">
+        <span class="btn btn-skip">Next</span>
       </div>
     </div>
   </div>
@@ -43,7 +43,7 @@ export default {
     };
   },
   methods: {
-    goToRelcome() {
+    goToRecommend() {
       this.$router.push('/recommend');
     }
   }
