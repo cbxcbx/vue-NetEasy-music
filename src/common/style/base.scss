@@ -34,15 +34,18 @@ body {
   .field-item {
     margin-bottom: 30px;
 
-    &:last-child {
-      margin-bottom: 0;
-    }
-
     .item-content {
       display: flex;
       flex-wrap: nowrap;
       padding: 8px 0 10px;
       border-bottom: 2px solid $light-orange;
+      &.error {
+        color: $error-message;
+        border-bottom-color: $error-message;
+        input {
+          color: $error-message;
+        }
+      }
     }
 
     label {
@@ -58,7 +61,11 @@ body {
       flex: 1;
       border: none;
       outline: none;
-      font-size: 16px;
+      font-size: 14px;
     }
+  }
+
+  .bg-orange {
+    margin-bottom: 0;
   }
 }
