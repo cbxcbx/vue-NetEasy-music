@@ -8,11 +8,11 @@
       </div>
     </div>
     <div class="login-register-btn-wrapper">
-      <button class="sign-up-btn" @click="setStatus('register')">Sign Up</button>
-      <button class="sign-in-btn" @click="setStatus('login')">Sign in</button>
+      <button class="normal-btn bg-orange" @click="setStatus('register')">Sign up</button>
+      <button class="normal-btn bg-white" @click="setStatus('login')">Sign in</button>
     </div>
     <transition name="popup">
-      <div class="popup-wrapper" v-show="currentComponent !=='' ">
+      <div class="popup-wrapper" v-show="currentComponent !==''">
         <keep-alive>
           <component :is="currentComponent"></component>
         </keep-alive>
@@ -58,6 +58,7 @@ export default {
   top: 0;
   right: 0;
   bottom: 0;
+  z-index: 1;
   background-image: url("./ocean.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -87,28 +88,10 @@ export default {
     position: absolute;
     left: 50%;
     bottom: 65px;
-    margin-left: -125px;
-    width: 250px;
+    max-width: 250px;
+    width: 85vw;
+    transform: translateX(-50%);
     z-index: 1;
-    button {
-      width: 100%;
-      padding: 20px 10px;
-      font-size: 16px;
-      font-weight: bold;
-      outline: none;
-      border: none;
-      border-radius: 25px;
-      background-color: transparent;
-    }
-    .sign-up-btn {
-      margin-bottom: 15px;
-      color: $white;
-      background-color: $login-btn;
-    }
-    .sign-in-btn {
-      color: $login-btn;
-      background-color: $white;
-    }
   }
 
   .popup-wrapper {
@@ -116,8 +99,10 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 2;
+    z-index: 3;
     min-height: 60%;
+    max-height: 85%;
+    padding: 40px 25px;
     background-color: $white;
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
@@ -128,16 +113,17 @@ export default {
     top: 0;
     left: 0;
     right: 0;
-    height: 40%;
-    z-index: 3;
+    height: 100%;
+    z-index: 2;
   }
 }
 
-.popup-enter-active,
-.popup-leave-active {
+.popup-enter-active {
   transition: transform 0.7s;
 }
-
+.popup-leave-active {
+  transition: transform 1s;
+}
 .popup-enter,
 .popup-leave-to {
   transform: translateY(100%);

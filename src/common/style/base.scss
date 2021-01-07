@@ -6,3 +6,59 @@ body {
   font-weight: normal;
   background-color: $bg-color;
 }
+
+.normal-btn {
+  width: 100%;
+  padding: 20px 10px;
+  font-size: $font-size-medium-x;
+  font-weight: bold;
+  outline: none;
+  border: none;
+  border-radius: 25px;
+  background-color: transparent;
+
+  &.bg-orange {
+    margin-bottom: 15px;
+    color: $white;
+    background-color: $login-btn;
+  }
+
+  &.bg-white {
+    color: $login-btn;
+    background-color: $white;
+  }
+}
+
+.login,
+.register {
+  .field-item {
+    margin-bottom: 30px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .item-content {
+      display: flex;
+      flex-wrap: nowrap;
+      padding: 8px 0 10px;
+      border-bottom: 2px solid $light-orange;
+    }
+
+    label {
+      color: $gray;
+    }
+
+    .iconfont {
+      margin-right: 8px;
+      font-size: $font-size-large-x;
+    }
+
+    input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+  }
+}
