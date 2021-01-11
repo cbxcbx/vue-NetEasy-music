@@ -10,8 +10,13 @@ import 'common/style/index.scss'
 
 Vue.config.productionTip = false
 
+// 在调用 Vue.use 前，给 Message 添加 install 方法
+Message.install = function (Vue, options) {
+  Vue.prototype.$message = Message
+}
+
 Vue.use(Button);
-Vue.component(Message.name, Message);
+Vue.use(Message);
 
 new Vue({
   router,

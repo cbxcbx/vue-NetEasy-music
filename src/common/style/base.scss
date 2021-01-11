@@ -39,6 +39,7 @@ body {
       flex-wrap: nowrap;
       padding: 8px 0 10px;
       border-bottom: 2px solid $light-orange;
+      align-items: center;
       &.error {
         color: $error-message;
         border-bottom-color: $error-message;

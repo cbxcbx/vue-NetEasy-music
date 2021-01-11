@@ -12,10 +12,13 @@
       <button class="normal-btn bg-white" @click="setStatus('login')">Sign in</button>
     </div>
     <transition name="popup">
-      <div class="popup-wrapper" v-show="currentComponent !==''">
-        <keep-alive>
-          <component :is="currentComponent"></component>
-        </keep-alive>
+      <div class="popup-wrapper register-popup" v-if="currentComponent =='register'">
+        <Register></Register>
+      </div>
+    </transition>
+    <transition name="popup">
+      <div class="popup-wrapper login-popup" v-if="currentComponent =='login'">
+        <Login></Login>
       </div>
     </transition>
     <div class="modal" @click.self="resetStatus" v-show="currentComponent !==''"></div>
@@ -43,6 +46,7 @@ export default {
     }
   },
   components: {
+    // Scroll,
     Login,
     Register
   }
@@ -99,13 +103,15 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
+    top: 260px;
     z-index: 3;
-    min-height: 60%;
-    max-height: 85%;
-    padding: 40px 25px;
+    padding: 40px 25px 0;
     background-color: $white;
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
+    &.register-popup {
+      top: 110px;
+    }
   }
 
   .modal {
@@ -118,12 +124,11 @@ export default {
   }
 }
 
-.popup-enter-active {
+.popup-enter-active,
+.popup-leave-active {
   transition: transform 0.7s;
 }
-.popup-leave-active {
-  transition: transform 1s;
-}
+
 .popup-enter,
 .popup-leave-to {
   transform: translateY(100%);

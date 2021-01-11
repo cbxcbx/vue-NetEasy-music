@@ -5,7 +5,7 @@ import Welcome from '@/welcome/welcome.vue'
 import Recommend from '@/recommend/recommend.vue'
 import Singer from '@/singer/singer.vue'
 import Rank from '@/rank/rank.vue'
-
+import Test from '@/test.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -37,6 +37,11 @@ const routes = [
     path: '/rank',
     name: 'Rank',
     component: Rank
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: Test
   }
 ]
 
