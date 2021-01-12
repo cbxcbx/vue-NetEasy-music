@@ -26,6 +26,15 @@ module.exports = {
         pathRewrite: {
           '^/captcha/sent': ''
         }
+      },
+      '/captcha/verify': {
+        target: 'http://localhost:3000/captcha/verify',
+        ws: true,
+        secure: false,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/captcha/verify': ''
+        }
       }
     }
   }

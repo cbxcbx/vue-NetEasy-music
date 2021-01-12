@@ -1,4 +1,8 @@
 export default {
   // 发送验证码
-  SENT_CAPTCHA: '/sent/captcha'
+  CAPTCHA_SENT: '/captcha/sent',
+  // 验证验证码
+  CAPTCHA_VERIFY: '/captcha/verify',
+  // 手机登录
+  LOGIN_CELLPHONE: '/login/cellphone'
 }

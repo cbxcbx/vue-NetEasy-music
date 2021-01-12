@@ -7,39 +7,33 @@
       <div class="register-content">
         <div class="field-item">
           <label>Phone</label>
-          <div class="item-content" :class="{ error: numberError }">
+          <div class="item-content" :class="{ error: registerForm.phoneNumber.error }">
             <i class="iconfont icon-9kaobei"></i>
-            <input type="text" placeholder="输入手机号码" v-model="phoneNumber" />
+            <input type="text" placeholder="输入手机号码" v-model="registerForm.phoneNumber.value" />
           </div>
-          <div class="error-message" v-show="numberError">Incorrect phone number format</div>
+          <div class="error-message" v-show="registerForm.phoneNumber.error">手机号码格式不正确</div>
         </div>
         <div class="field-item">
           <label>Nickname</label>
-          <div class="item-content" :class="{ error: nickNameError }">
+          <div class="item-content" :class="{ error: registerForm.nickname.error }">
             <i class="iconfont icon-username"></i>
-            <input placeholder="输入昵称" v-model="nickname" />
+            <input placeholder="输入昵称" v-model="registerForm.nickname.value" />
           </div>
-          <div class="error-message" v-show="nickNameError">
-            Nickname is 4-30 characters, and does not contain special characters
-            except-and _
-          </div>
+          <div class="error-message" v-show="registerForm.nickname.error">昵称为4-30个字,且不包含除-和_以外的特殊字符</div>
         </div>
         <div class="field-item">
           <label>Password</label>
-          <div class="item-content" :class="{ error: passwordError }">
+          <div class="item-content" :class="{ error: registerForm.password.error }">
             <i class="iconfont icon-key"></i>
-            <input type="password" placeholder="输入密码" v-model="password" />
+            <input type="password" placeholder="输入密码" v-model="registerForm.password.value" />
           </div>
-          <div class="error-message" v-show="passwordError">
-            Please enter the correct password, which consists of numbers and
-            letters and underscores
-          </div>
+          <div class="error-message" v-show="registerForm.password.error">密码为4-12位, 由数字、字母、下划线组成</div>
         </div>
         <div class="field-item">
           <label>Verification code</label>
-          <div class="item-content">
+          <div class="item-content" :class="{ error: registerForm.code.error }">
             <i class="iconfont icon-mima"></i>
-            <input type="text" placeholder="输入验证码" />
+            <input type="text" placeholder="输入验证码" v-model="registerForm.code.value" />
             <span
               class="sent-captcha"
               type="text"
@@ -47,9 +41,8 @@
               @click="sentCaptcha"
             >获取验证码</span>
             <span v-show="!showSentCaptcha" class="resentTime">{{ resentTime }} s</span>
-            <div></div>
-            <div class="error-message" v-show="verificationError">Incorrect verification code</div>
           </div>
+          <div class="error-message" v-show="registerForm.code.error">验证码需为4位数字</div>
         </div>
         <button class="normal-btn bg-orange" @click="registerUser">Sign up</button>
       </div>
@@ -59,22 +52,34 @@
 
 <script>
 import Scroll from "base/scroll/scroll";
-
+import { captchaSent, captchaVerify } from "api/register";
+import { ERR_OK } from "api/config";
 const TIME_COUNT = 60;
 
 export default {
   data() {
     return {
-      phoneNumber: "",
-      nickname: "",
-      password: "",
-      code: 0,
+      registerForm: {
+        phoneNumber: {
+          value: "",
+          error: false
+        },
+        nickname: {
+          value: "",
+          error: false
+        },
+        password: {
+          value: "",
+          error: false
+        },
+        code: {
+          value: "",
+          error: false
+        }
+      },
+      isError: false,
       resentTime: 0,
-      showSentCaptcha: true,
-      numberError: false,
-      nickNameError: false,
-      passwordError: false,
-      verificationError: false
+      showSentCaptcha: true
     };
   },
   methods: {
@@ -93,48 +98,124 @@ export default {
     // 验证密码格式是否正确
     validatePassword(password) {
       if (!password) return false;
-      let reg = /^\w{4,12}$/;
+      let reg = /^\w{8,20}$/;
       return reg.test(password);
     },
     // 验证手机验证码
     validateVerificationCode(code) {
       if (!code) return false;
-      let reg = /^\d{6}$/;
+      let reg = /^\d{4}$/;
       return reg.test(code);
     },
+    // 发送手机验证码
     sentCaptcha() {
+      // 防抖
       if (!this.timer) {
         this.resentTime = TIME_COUNT;
-        this.showSentCaptcha = false;
-        this.timer = setInterval(() => {
-          if (this.resentTime > 0 && this.resentTime <= TIME_COUNT) {
-            this.resentTime--;
-          } else {
-            this.showSentCaptcha = true;
-            clearInterval(this.timer);
-            this.timer = null;
-          }
-        }, 1000);
+        // 验证手机号码格式
+        if (!this.isPhoneNumber(this.registerForm.phoneNumber.value)) {
+          this.$message({
+            type: "error",
+            message: "手机格式不正确"
+          });
+          return false;
+        }
+        // 发送验证码 成功之后 倒计时60s后可重新发送
+        captchaSent(this.registerForm.phoneNumber.value)
+          .then(data => {
+            if (data.code === ERR_OK) {
+              this.$message({
+                type: "success",
+                message: "验证码发送成功!"
+              });
+              this.showSentCaptcha = false;
+              this.timer = setInterval(() => {
+                if (this.resentTime > 0 && this.resentTime <= TIME_COUNT) {
+                  this.resentTime--;
+                } else {
+                  this.showSentCaptcha = true;
+                  clearInterval(this.timer);
+                  this.timer = null;
+                }
+              }, 1000);
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
       }
     },
-
+    // 验证表单和验证码
+    validateForm() {
+      for (let key in this.registerForm) {
+        let val = this.registerForm[key].value;
+        switch (key) {
+          case "phoneNumber":
+            if (!val || !this.isPhoneNumber(val)) {
+              this.registerForm[key].error = true;
+            } else {
+              this.registerForm[key].error = false;
+            }
+            break;
+          case "nickname":
+            if (!val || !this.validateNickName(val)) {
+              this.registerForm[key].error = true;
+            } else {
+              this.registerForm[key].error = false;
+            }
+            break;
+          case "password":
+            if (!val || !this.validatePassword(val)) {
+              this.registerForm[key].error = true;
+            } else {
+              this.registerForm[key].error = false;
+            }
+            break;
+          case "code":
+            if (!val || !this.validateVerificationCode(val)) {
+              this.registerForm[key].error = true;
+            } else {
+              this.registerForm[key].error = false;
+            }
+            break;
+        }
+      }
+      this.refresh();
+    },
     registerUser() {
+      let registerForm = this.registerForm;
+      this.validateForm();
       if (
-        !this.isPhoneNumber(this.phoneNumber) ||
-        !this.validateNickName(this.nickname) ||
-        !this.validatePassword(this.password) ||
-        !this.validateVerificationCode(this.code)
+        registerForm.phoneNumber.error ||
+        registerForm.nickname.error ||
+        registerForm.password.error ||
+        registerForm.code.error
       ) {
-        console.log("1", this.isPhoneNumber(this.phoneNumber));
-        console.log("2", this.validateNickName(this.nickname));
-        console.log("3", this.validatePassword(this.password));
-        console.log("4", this.validateVerificationCode(this.password));
         this.$message({
           message: "信息填写不正确",
           type: "error"
         });
         return false;
       }
+      captchaVerify(
+        this.registerForm.phoneNumber.value,
+        this.registerForm.code.value
+      )
+        .then(data => {
+          if (data.code === ERR_OK) {
+            this.$message({
+              message: "注册成功",
+              type: "success"
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          this.$message({
+            message: "验证码错误",
+            type: "error"
+          });
+        });
     },
     refresh() {
       setTimeout(() => {
@@ -143,35 +224,35 @@ export default {
     }
   },
   watch: {
-    phoneNumber(newValue, oldValue) {
+    "registerForm.phoneNumber.value"(newValue, oldValue) {
       if (!newValue || !this.isPhoneNumber(newValue)) {
-        this.numberError = true;
+        this.registerForm.phoneNumber.error = true;
       } else {
-        this.numberError = false;
+        this.registerForm.phoneNumber.error = false;
       }
       this.refresh();
     },
-    nickname(newValue, oldValue) {
+    "registerForm.nickname.value"(newValue, oldValue) {
       if (!newValue || !this.validateNickName(newValue)) {
-        this.nickNameError = true;
+        this.registerForm.nickname.error = true;
       } else {
-        this.nickNameError = false;
+        this.registerForm.nickname.error = false;
       }
       this.refresh();
     },
-    password(newValue, oldValue) {
+    "registerForm.password.value"(newValue, oldValue) {
       if (!newValue || !this.validatePassword(newValue)) {
-        this.passwordError = true;
+        this.registerForm.password.error = true;
       } else {
-        this.passwordError = false;
+        this.registerForm.password.error = false;
       }
       this.refresh();
     },
-    code(newValue, oldValue) {
+    "registerForm.code.value"(newValue, oldValue) {
       if (!newValue || !this.validateVerificationCode(newValue)) {
-        this.verificationError = true;
+        this.registerForm.code.error = true;
       } else {
-        this.verificationError = false;
+        this.registerForm.code.error = false;
       }
       this.refresh();
     }
@@ -196,13 +277,12 @@ export default {
     }
     .register-content {
       margin-top: 50px;
-
+      padding-bottom: 40px;
       .error-message {
         margin-top: 10px;
         font-size: 16px;
         color: $error-message;
       }
-
       .sent-captcha {
         font-size: 14px;
         color: $light-orange;

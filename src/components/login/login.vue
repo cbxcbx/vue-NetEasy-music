@@ -8,14 +8,14 @@
         <label>Phone</label>
         <div class="item-content">
           <i class="iconfont icon-phone2"></i>
-          <input type="text" placeholder="Please enter the phone number" />
+          <input type="text" placeholder="输入手机号码" />
         </div>
       </div>
       <div class="field-item">
         <label>Password</label>
         <div class="item-content">
           <i class="iconfont icon-key"></i>
-          <input type="text" placeholder="Please enter password" />
+          <input type="text" placeholder="输入密码" />
         </div>
       </div>
       <button class="normal-btn bg-orange">Sign in</button>
