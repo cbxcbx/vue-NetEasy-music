@@ -11,31 +11,24 @@ module.exports = {
         base: resolve('src/base'),
         assets: resolve('src/assets'),
         common: resolve('src/common'),
-        '@': resolve('src/components')
+        '@': resolve('src/components'),
+        pages: resolve('src/pages')
       }
     }
   },
 
   devServer: {
     proxy: {
-      '/captcha/sent': {
-        target: 'http://localhost:3000/captcha/sent',
-        ws: true,
-        secure: false,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/captcha/sent': ''
-        }
-      },
-      '/captcha/verify': {
-        target: 'http://localhost:3000/captcha/verify',
-        ws: true,
-        secure: false,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/captcha/verify': ''
-        }
-      }
+      // // 手机登录
+      // '/login/cellphone': {
+      //   target: 'http://localhost:3000/login/cellphone',
+      //   ws: true,
+      //   secure: false,
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '^/login/cellphone': ''
+      //   }
+      // }
     }
   }
 }

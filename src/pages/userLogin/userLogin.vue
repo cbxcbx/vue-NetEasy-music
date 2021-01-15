@@ -1,5 +1,5 @@
 <template>
-  <div class="homepage">
+  <div class="user-login">
     <div class="enjoy-your-music">
       <img src="./enjoy-icon.png" class="enjoy-icon" />
       <div class="text">
@@ -12,14 +12,9 @@
       <button class="normal-btn bg-white" @click="setStatus('login')">Sign in</button>
     </div>
     <transition name="popup">
-      <div class="popup-wrapper register-popup" v-if="currentComponent =='register'">
-        <Register></Register>
-      </div>
-    </transition>
-    <transition name="popup">
-      <div class="popup-wrapper login-popup" v-if="currentComponent =='login'">
-        <Login></Login>
-      </div>
+      <keep-alive>
+        <component :is="currentComponent"></component>
+      </keep-alive>
     </transition>
     <div class="modal" @click.self="resetStatus" v-show="currentComponent !==''"></div>
   </div>
@@ -46,7 +41,6 @@ export default {
     }
   },
   components: {
-    // Scroll,
     Login,
     Register
   }
@@ -56,14 +50,14 @@ export default {
 <style lang="scss" scoped>
 @import "common/style/variable.scss";
 
-.homepage {
+.user-login {
   position: fixed;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: 1;
-  background-image: url("./ocean.jpg");
+  z-index: 11;
+  background-image: url("./ocean2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   .enjoy-your-music {
@@ -96,22 +90,6 @@ export default {
     width: 85vw;
     transform: translateX(-50%);
     z-index: 1;
-  }
-
-  .popup-wrapper {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 260px;
-    z-index: 3;
-    padding: 40px 25px 0;
-    background-color: $white;
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
-    &.register-popup {
-      top: 110px;
-    }
   }
 
   .modal {

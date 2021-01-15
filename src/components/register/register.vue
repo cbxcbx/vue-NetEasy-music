@@ -1,59 +1,65 @@
 <template>
-  <Scroll class="register-wrapper" ref="registerWrapper">
-    <div class="register">
-      <div class="register-header">
-        <h1>New Account</h1>
+  <div class="popup-wrapper">
+    <Scroll class="register-wrapper" ref="registerWrapper">
+      <div class="register">
+        <div class="register-header">
+          <h1>New Account</h1>
+        </div>
+        <div class="register-content">
+          <div class="field-item">
+            <label>Phone</label>
+            <div class="item-content" :class="{ error: registerForm.phoneNumber.error }">
+              <i class="iconfont icon-9kaobei"></i>
+              <input type="text" placeholder="输入手机号码" v-model="registerForm.phoneNumber.value" />
+            </div>
+            <div class="error-message" v-show="registerForm.phoneNumber.error">手机号码格式不正确</div>
+          </div>
+          <div class="field-item">
+            <label>Nickname</label>
+            <div class="item-content" :class="{ error: registerForm.nickname.error }">
+              <i class="iconfont icon-username"></i>
+              <input placeholder="输入昵称" v-model="registerForm.nickname.value" />
+            </div>
+            <div
+              class="error-message"
+              v-show="registerForm.nickname.error"
+            >昵称为4-30个字,且不包含除-和_以外的特殊字符</div>
+          </div>
+          <div class="field-item">
+            <label>Password</label>
+            <div class="item-content" :class="{ error: registerForm.password.error }">
+              <i class="iconfont icon-key"></i>
+              <input type="password" placeholder="输入密码" v-model="registerForm.password.value" />
+            </div>
+            <div class="error-message" v-show="registerForm.password.error">密码为8-20位, 含有数字、字母、符号 至少两种且不能含有空格</div>
+          </div>
+          <div class="field-item">
+            <label>Verification code</label>
+            <div class="item-content" :class="{ error: registerForm.code.error }">
+              <i class="iconfont icon-mima"></i>
+              <input type="text" placeholder="输入验证码" v-model="registerForm.code.value" />
+              <span
+                class="sent-captcha"
+                type="text"
+                v-show="showSentCaptcha"
+                @click="sentCaptcha"
+              >获取验证码</span>
+              <span v-show="!showSentCaptcha" class="resentTime">{{ resentTime }} s</span>
+            </div>
+            <div class="error-message" v-show="registerForm.code.error">验证码需为4位数字</div>
+          </div>
+          <button class="normal-btn bg-orange" @click="registerUser">Sign up</button>
+        </div>
       </div>
-      <div class="register-content">
-        <div class="field-item">
-          <label>Phone</label>
-          <div class="item-content" :class="{ error: registerForm.phoneNumber.error }">
-            <i class="iconfont icon-9kaobei"></i>
-            <input type="text" placeholder="输入手机号码" v-model="registerForm.phoneNumber.value" />
-          </div>
-          <div class="error-message" v-show="registerForm.phoneNumber.error">手机号码格式不正确</div>
-        </div>
-        <div class="field-item">
-          <label>Nickname</label>
-          <div class="item-content" :class="{ error: registerForm.nickname.error }">
-            <i class="iconfont icon-username"></i>
-            <input placeholder="输入昵称" v-model="registerForm.nickname.value" />
-          </div>
-          <div class="error-message" v-show="registerForm.nickname.error">昵称为4-30个字,且不包含除-和_以外的特殊字符</div>
-        </div>
-        <div class="field-item">
-          <label>Password</label>
-          <div class="item-content" :class="{ error: registerForm.password.error }">
-            <i class="iconfont icon-key"></i>
-            <input type="password" placeholder="输入密码" v-model="registerForm.password.value" />
-          </div>
-          <div class="error-message" v-show="registerForm.password.error">密码为4-12位, 由数字、字母、下划线组成</div>
-        </div>
-        <div class="field-item">
-          <label>Verification code</label>
-          <div class="item-content" :class="{ error: registerForm.code.error }">
-            <i class="iconfont icon-mima"></i>
-            <input type="text" placeholder="输入验证码" v-model="registerForm.code.value" />
-            <span
-              class="sent-captcha"
-              type="text"
-              v-show="showSentCaptcha"
-              @click="sentCaptcha"
-            >获取验证码</span>
-            <span v-show="!showSentCaptcha" class="resentTime">{{ resentTime }} s</span>
-          </div>
-          <div class="error-message" v-show="registerForm.code.error">验证码需为4位数字</div>
-        </div>
-        <button class="normal-btn bg-orange" @click="registerUser">Sign up</button>
-      </div>
-    </div>
-  </Scroll>
+    </Scroll>
+  </div>
 </template>
 
 <script>
 import Scroll from "base/scroll/scroll";
 import { captchaSent, captchaVerify } from "api/register";
 import { ERR_OK } from "api/config";
+import * as Util from "common/js/util/validate";
 const TIME_COUNT = 60;
 
 export default {
@@ -83,37 +89,13 @@ export default {
     };
   },
   methods: {
-    // 验证手机格式是否正确
-    isPhoneNumber(phoneNumber) {
-      if (!phoneNumber) return false;
-      let reg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/;
-      return reg.test(phoneNumber);
-    },
-    // 验证昵称是否正确，4-30位，由中文数字字母 - _组成
-    validateNickName(nickname) {
-      // if (!nickname) return false;
-      let reg = /^[\u4E00-\u9FA5A-Za-z0-9_-]{4,30}$/;
-      return reg.test(nickname);
-    },
-    // 验证密码格式是否正确
-    validatePassword(password) {
-      if (!password) return false;
-      let reg = /^\w{8,20}$/;
-      return reg.test(password);
-    },
-    // 验证手机验证码
-    validateVerificationCode(code) {
-      if (!code) return false;
-      let reg = /^\d{4}$/;
-      return reg.test(code);
-    },
     // 发送手机验证码
     sentCaptcha() {
       // 防抖
       if (!this.timer) {
         this.resentTime = TIME_COUNT;
         // 验证手机号码格式
-        if (!this.isPhoneNumber(this.registerForm.phoneNumber.value)) {
+        if (!Util.isPhoneNumber(this.registerForm.phoneNumber.value)) {
           this.$message({
             type: "error",
             message: "手机格式不正确"
@@ -122,8 +104,8 @@ export default {
         }
         // 发送验证码 成功之后 倒计时60s后可重新发送
         captchaSent(this.registerForm.phoneNumber.value)
-          .then(data => {
-            if (data.code === ERR_OK) {
+          .then(res => {
+            if (res.data.code === ERR_OK) {
               this.$message({
                 type: "success",
                 message: "验证码发送成功!"
@@ -151,28 +133,28 @@ export default {
         let val = this.registerForm[key].value;
         switch (key) {
           case "phoneNumber":
-            if (!val || !this.isPhoneNumber(val)) {
+            if (!val || !Util.isPhoneNumber(val)) {
               this.registerForm[key].error = true;
             } else {
               this.registerForm[key].error = false;
             }
             break;
           case "nickname":
-            if (!val || !this.validateNickName(val)) {
+            if (!val || !Util.validateNickName(val)) {
               this.registerForm[key].error = true;
             } else {
               this.registerForm[key].error = false;
             }
             break;
           case "password":
-            if (!val || !this.validatePassword(val)) {
+            if (!val || !Util.validatePassword(val)) {
               this.registerForm[key].error = true;
             } else {
               this.registerForm[key].error = false;
             }
             break;
           case "code":
-            if (!val || !this.validateVerificationCode(val)) {
+            if (!val || !Util.validateVerificationCode(val)) {
               this.registerForm[key].error = true;
             } else {
               this.registerForm[key].error = false;
@@ -182,6 +164,7 @@ export default {
       }
       this.refresh();
     },
+    // 提交表单
     registerUser() {
       let registerForm = this.registerForm;
       this.validateForm();
@@ -197,12 +180,13 @@ export default {
         });
         return false;
       }
+      // 验证验证码
       captchaVerify(
         this.registerForm.phoneNumber.value,
         this.registerForm.code.value
       )
-        .then(data => {
-          if (data.code === ERR_OK) {
+        .then(res => {
+          if (res.data.code === ERR_OK) {
             this.$message({
               message: "注册成功",
               type: "success"
@@ -217,6 +201,7 @@ export default {
           });
         });
     },
+    // 刷新scroll组件
     refresh() {
       setTimeout(() => {
         this.$refs.registerWrapper.refresh();
@@ -225,7 +210,7 @@ export default {
   },
   watch: {
     "registerForm.phoneNumber.value"(newValue, oldValue) {
-      if (!newValue || !this.isPhoneNumber(newValue)) {
+      if (!newValue || !Util.isPhoneNumber(newValue)) {
         this.registerForm.phoneNumber.error = true;
       } else {
         this.registerForm.phoneNumber.error = false;
@@ -233,7 +218,7 @@ export default {
       this.refresh();
     },
     "registerForm.nickname.value"(newValue, oldValue) {
-      if (!newValue || !this.validateNickName(newValue)) {
+      if (!newValue || !Util.validateNickName(newValue)) {
         this.registerForm.nickname.error = true;
       } else {
         this.registerForm.nickname.error = false;
@@ -241,7 +226,7 @@ export default {
       this.refresh();
     },
     "registerForm.password.value"(newValue, oldValue) {
-      if (!newValue || !this.validatePassword(newValue)) {
+      if (!newValue || !Util.validatePassword(newValue)) {
         this.registerForm.password.error = true;
       } else {
         this.registerForm.password.error = false;
@@ -249,7 +234,7 @@ export default {
       this.refresh();
     },
     "registerForm.code.value"(newValue, oldValue) {
-      if (!newValue || !this.validateVerificationCode(newValue)) {
+      if (!newValue || !Util.validateVerificationCode(newValue)) {
         this.registerForm.code.error = true;
       } else {
         this.registerForm.code.error = false;
@@ -278,11 +263,7 @@ export default {
     .register-content {
       margin-top: 50px;
       padding-bottom: 40px;
-      .error-message {
-        margin-top: 10px;
-        font-size: 16px;
-        color: $error-message;
-      }
+
       .sent-captcha {
         font-size: 14px;
         color: $light-orange;
@@ -307,5 +288,9 @@ export default {
       background-color: #42b983;
     }
   }
+}
+
+.popup-wrapper {
+  top: 110px;
 }
 </style>

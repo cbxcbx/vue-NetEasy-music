@@ -40,13 +40,22 @@ body {
       padding: 8px 0 10px;
       border-bottom: 2px solid $light-orange;
       align-items: center;
+
       &.error {
         color: $error-message;
         border-bottom-color: $error-message;
+
         input {
           color: $error-message;
         }
       }
+    }
+
+    .error-message {
+      margin-top: 10px;
+      font-size: 16px;
+      line-height: 1.5;
+      color: $error-message;
     }
 
     label {
@@ -69,4 +78,17 @@ body {
   .bg-orange {
     margin-bottom: 0;
   }
+}
+
+.popup-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 200px;
+  z-index: 3;
+  padding: 40px 25px 0;
+  background-color: $white;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
 }

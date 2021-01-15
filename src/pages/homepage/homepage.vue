@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+  <div class="homepage">
+    <Nav></Nav>
     <keep-alive>
       <router-view />
     </keep-alive>
@@ -7,7 +8,12 @@
 </template>
 
 <script>
-export default {};
+import Nav from "@/nav/nav";
+export default {
+  components: {
+    Nav
+  }
+};
 </script>
 <style lang="scss" scoped>
 </style>
