@@ -12,7 +12,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/user-login'
+    redirect: '/homepage'
   },
   {
     path: '/user-login',
@@ -21,9 +21,13 @@ const routes = [
   },
   {
     path: '/homepage',
-    name: 'Homepage',
     component: Homepage,
     children: [
+      {
+        path: '/',
+        name: 'Recommend',
+        component: Recommend
+      },
       {
         path: '/recommend',
         name: 'Recommend',

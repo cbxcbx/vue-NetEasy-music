@@ -18,17 +18,5 @@ module.exports = {
   },
 
   devServer: {
-    proxy: {
-      // // 手机登录
-      // '/login/cellphone': {
-      //   target: 'http://localhost:3000/login/cellphone',
-      //   ws: true,
-      //   secure: false,
-      //   changeOrigin: true,
-      //   pathRewrite: {
-      //     '^/login/cellphone': ''
-      //   }
-      // }
-    }
   }
 }

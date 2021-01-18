@@ -1,16 +1,17 @@
 <template>
   <div class="recommend">
-    <div class="">
-
-    </div>
-    <div class="">
-
-    </div>
+    <Search></Search>
+    <div class></div>
   </div>
 </template>
 
 <script>
-export default {};
+import Search from "@/search/search";
+export default {
+  components: {
+    Search
+  }
+};
 </script>
 
 <style lang="scss" scoped>

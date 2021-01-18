@@ -1,9 +1,9 @@
 <template>
   <div class="homepage">
-    <Nav></Nav>
     <keep-alive>
       <router-view />
     </keep-alive>
+    <Nav></Nav>
   </div>
 </template>
 
