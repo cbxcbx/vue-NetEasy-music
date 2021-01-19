@@ -4,5 +4,9 @@ export default {
   // 验证验证码
   CAPTCHA_VERIFY: '/captcha/verify',
   // 手机登录
-  LOGIN_CELLPHONE: '/login/cellphone'
+  LOGIN_CELLPHONE: '/login/cellphone',
+  // 获取Banner
+  GET_BANNER: '/banner',
+  // 获取最新专辑
+  GET_NEWEST_ALBUM: '/album/newest'
 }

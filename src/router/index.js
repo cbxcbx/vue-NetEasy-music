@@ -25,12 +25,10 @@ const routes = [
     children: [
       {
         path: '/',
-        name: 'Recommend',
         component: Recommend
       },
       {
         path: '/recommend',
-        name: 'Recommend',
         component: Recommend
       },
       {

@@ -1,19 +1,13 @@
 <template>
-  <div class="core-container">
-    <div class="scroll-wrapper" ref="scroll">
-      <div class="scroll-content">
-        <div
-          class="scroll-item"
-          v-for="(item, index) in emojis"
-          :key="index"
-        >{{item}}</div>
-      </div>
+  <div class="scroll-wrapper" ref="scroll">
+    <div class="scroll-content">
+      <div class="scroll-item" v-for="(item, index) in emojis" :key="index">{{item}}</div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-import BScroll from "better-scroll";
+import BScroll from "@better-scroll/core";
 
 export default {
   data() {
@@ -63,7 +57,8 @@ export default {
     init() {
       this.bs = new BScroll(this.$refs.scroll, {
         probeType: 3,
-        click: true
+        click: true,
+        scrollX: true
       });
       this.bs.on("scrollStart", () => {
         console.log("scrollStart-");
@@ -80,25 +75,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.core-container {
-  .scroll-wrapper {
-    height: 400px;
-    position: relative;
-    overflow: hidden;
-    .scroll-item {
-      height: 50px;
-      line-height: 50px;
-      font-size: 24px;
-      font-weight: bold;
-      border-bottom: 1px solid #eee;
-      text-align: center;
-      &:nth-child(2n) {
-        background-color: #f3f5f7;
-      }
-      &:nth-child(2n + 1) {
-        background-color: #42b983;
-      }
-    }
+.scroll-wrapper {
+  position: relative;
+  width: 90%;
+  margin: 80px auto;
+  white-space: nowrap;
+  border: 3px solid #42b983;
+  border-radius: 5px;
+  overflow: hidden;
+  .scroll-content {
+    display: inline-block;
+  }
+  .scroll-item {
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    font-size: 24px;
+    font-weight: bold;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    padding: 0 10px;
   }
 }
 </style>
