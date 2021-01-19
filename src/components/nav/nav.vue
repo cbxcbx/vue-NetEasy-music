@@ -8,7 +8,7 @@
         </div>
         <div class="nav-list">
           <div class="nav-item">
-            <router-link tag="span" class="nav-icon iconfont icon-yinle" to="/recommend"></router-link>
+            <router-link tag="span" class="nav-icon iconfont icon-yinle" to="/"></router-link>
           </div>
           <div class="nav-item">
             <router-link tag="span" class="nav-icon iconfont icon-paihang" to="/rank"></router-link>
