@@ -7,6 +7,11 @@ export function getBanner() {
   return axios.get(url)
 }
 
+export function getDragonBall() {
+  let url = HOST + Url.GET_DRAGON_BALL;
+  return axios.get(url)
+}
+
 export function getPersonalized(limit) {
   let url = limit ? HOST + Url.GET_PERSONALIZED + '?limit=' + limit : HOST + Url.GET_PERSONALIZED;
   return axios.get(url)

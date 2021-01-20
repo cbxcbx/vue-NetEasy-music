@@ -5,7 +5,11 @@
         <div class="slider-wrapper">
           <div v-if="bannerList.length" class="slider-content">
             <Slider>
-              <div class="slider-item" v-for="item in bannerList" :key="item.targetId">
+              <div
+                class="slider-item"
+                v-for="item in bannerList"
+                :key="item.targetId"
+              >
                 <a :href="item.url">
                   <img :src="item.imageUrl" alt />
                 </a>
@@ -14,27 +18,28 @@
           </div>
         </div>
         <div class="tab">
-          <div class="tab-item">
-            <router-link tag="span" class="nav-icon" :to="{name: 'Recommend'}">推荐</router-link>
-          </div>
-          <div class="tab-item">
-            <router-link tag="span" class="nav-icon" :to="{name: 'Recommend'}">电台</router-link>
-          </div>
-          <div class="tab-item">
-            <router-link tag="span" class="nav-icon" to="/radio">电台</router-link>
+          <div class="tab-item" v-for="icon in iconList" :key="icon.id">
+            <img :src="icon.iconUrl">
+            <router-link tag="span" class="nav-icon" :to="icon.url"
+              >{{ icon.name }}</router-link
+            >
           </div>
         </div>
         <div class="personalized-list">
           <h1>推荐歌单</h1>
           <ul>
-            <li v-for="item in personalizedList" :key="item.id" class="list-item">
+            <li
+              v-for="item in personalizedList"
+              :key="item.id"
+              class="list-item"
+            >
               <div class="image">
                 <div class="gradients"></div>
                 <img :src="item.picUrl" />
               </div>
               <div class="play-count">
                 <span class="iconfont icon-shiting"></span>
-                <span>{{Math.floor(item.playCount / 10000) }}万</span>
+                <span>{{ Math.floor(item.playCount / 10000) }}万</span>
               </div>
               <div class="text">
                 <p class="name">{{ item.name }}</p>
@@ -50,18 +55,20 @@
 <script>
 import Scroll from "base/scroll/scroll";
 import Slider from "base/slider/slider";
-import { getBanner, getPersonalized } from "api/discovery";
+import { getBanner, getDragonBall, getPersonalized } from "api/discovery";
 import { ERR_OK } from "api/config";
 export default {
   data() {
     return {
       bannerList: [],
+      iconList: [],
       personalizedList: []
     };
   },
   created() {
     setTimeout(() => {
       this._getBanner();
+      this._getDragonBall();
       this._getPersonalized();
     }, 20);
   },
@@ -73,10 +80,18 @@ export default {
         }
       });
     },
+    _getDragonBall() {
+      getDragonBall().then(res => {
+        if (res.data.code === ERR_OK) {
+          console.log(res.data);
+          this.iconList = res.data.data;
+        }
+      });
+    },
     _getPersonalized() {
       getPersonalized().then(res => {
         if (res.data.code === ERR_OK) {
-          console.log(res.data);
+          // console.log(res.data);
           this.personalizedList = res.data.result;
         }
       });
