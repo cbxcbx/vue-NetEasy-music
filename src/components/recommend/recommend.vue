@@ -1,6 +1,5 @@
 <template>
   <div class="recommend">
-    <Search></Search>
     <div class="recommend-wrapper">
       <!-- <Scroll class="recommend-content"> -->
       <div>
@@ -20,23 +19,14 @@
           <h2>For you</h2>
         </div>
       </div>
-      <!-- <Slider>
-        <div class="slider-item" v-for="item in bannerList" :key="item.targetId">
-          <a :href="item.url">
-            <img :src="item.imageUrl" alt />
-          </a>
-        </div>
-      </Slider>-->
       <!-- </Scroll> -->
     </div>
   </div>
 </template>
 
 <script>
-import Search from "@/search/search";
 import Scroll from "base/scroll/scroll";
-// import Slider from "base/slider/slider";
-import { getNewestAlbum } from "api/recommend";
+import { getNewestAlbum } from "api/discovery";
 import { ERR_OK } from "api/config";
 export default {
   data() {
@@ -47,7 +37,6 @@ export default {
   },
   created() {
     this._getNewestAlbum();
-    // this._setSliderWidth();
   },
   methods: {
     _getNewestAlbum() {
@@ -56,25 +45,17 @@ export default {
           this.newestAlbum = res.data.albums;
         }
       });
-
-      // getBanner().then(res => {
-      //   if (res.data.code === ERR_OK) {
-      //     this.bannerList = res.data.banners.slice(5);
-      //   }
-      // });
     }
   },
   watch: {
     newestAlbum() {
       let length = this.newestAlbum.length;
-      let width = 160 * length;
+      let width = 140 * length;
       this.$refs.newestAlbum.style.width = width + "px";
     }
   },
   components: {
-    Search,
     Scroll
-    // Slider
   }
 };
 </script>
@@ -83,7 +64,7 @@ export default {
 @import "common/style/variable.scss";
 .recommend {
   position: fixed;
-  top: 0;
+  top: 120px;
   left: 0;
   right: 0;
   bottom: 80px;
@@ -104,7 +85,7 @@ export default {
     .album-item {
       display: inline-block;
       padding-right: 20px;
-      width: 160px;
+      width: 140px;
       height: 210px;
       img {
         width: 120px;
@@ -120,7 +101,7 @@ export default {
       .album-artist {
         width: 90%;
         margin-top: 10px;
-        font-size: 14px;
+        font-size: $font-size-medium;
         color: $gray;
       }
     }

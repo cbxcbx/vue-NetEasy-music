@@ -28,7 +28,7 @@
 <script>
 import * as Util from "common/js/util/validate";
 import { encrypt } from "common/js/util/md5";
-import { loginCellphone } from "api/login";
+import { loginCellphone } from "api/user/login";
 import { ERR_OK } from "api/config";
 export default {
   data() {

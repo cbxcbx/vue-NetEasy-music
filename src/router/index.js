@@ -1,18 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import UserLogin from 'pages/userLogin/userLogin'
 import Homepage from 'pages/homepage/homepage'
-import Welcome from '@/welcome/welcome.vue'
-import Recommend from '@/recommend/recommend.vue'
-import Singer from '@/singer/singer.vue'
-import Rank from '@/rank/rank.vue'
-import Test from '@/test.vue'
+import UserLogin from 'pages/userLogin/userLogin'
+import Main from 'pages/main/main'
+// import Discovery from '@/discovery/discovery'
+import Welcome from '@/welcome/welcome'
+import Recommend from '@/recommend/recommend'
+import Singer from '@/singer/singer'
+import Rank from '@/rank/rank'
+import Test from '@/test'
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    redirect: '/homepage'
+    redirect: '/home'
   },
   {
     path: '/user-login',
@@ -20,16 +22,19 @@ const routes = [
     component: UserLogin
   },
   {
-    path: '/homepage',
-    component: Homepage,
+    path: '/home',
+    component: Main,
     children: [
       {
-        path: '/',
-        component: Recommend
-      },
-      {
-        path: '/recommend',
-        component: Recommend
+        path: '',
+        component: Homepage,
+        children: [
+          {
+            path: 'recommend',
+            name: 'Recommend',
+            component: Recommend
+          }
+        ]
       },
       {
         path: '/singer',

@@ -8,7 +8,7 @@
         </div>
         <div class="nav-list">
           <div class="nav-item">
-            <router-link tag="span" class="nav-icon iconfont icon-yinle" to="/"></router-link>
+            <router-link tag="span" class="nav-icon iconfont icon-yinle" to="/home"></router-link>
           </div>
           <div class="nav-item">
             <router-link tag="span" class="nav-icon iconfont icon-paihang" to="/rank"></router-link>
@@ -34,7 +34,8 @@ export default {};
   transition: all 0.5s;
 }
 
-.nav-enter, .nav-leave-to {
+.nav-enter,
+.nav-leave-to {
   transform: translateY(100%);
   opacity: 0;
 }

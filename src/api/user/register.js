@@ -1,6 +1,6 @@
 import axios from "axios"
-import { HOST } from './config'
-import Url from './url.js'
+import { HOST } from '../config'
+import Url from '../url.js'
 
 export function captchaSent(phone) {
   let url = HOST + Url.CAPTCHA_SENT + "?phone=" + phone;

@@ -57,7 +57,7 @@
 
 <script>
 import Scroll from "base/scroll/scroll";
-import { captchaSent, captchaVerify } from "api/register";
+import { captchaSent, captchaVerify } from "api/user/register";
 import { ERR_OK } from "api/config";
 import * as Util from "common/js/util/validate";
 const TIME_COUNT = 60;

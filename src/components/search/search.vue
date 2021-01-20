@@ -14,8 +14,7 @@ export default {};
 <style lang="scss" scoped>
 @import "common/style/variable.scss";
 .search {
-  margin-top: 25px;
-  padding: 0 5vw;
+  padding: 25px 5vw 0;
   .search-content {
     position: relative;
     width: 100%;
