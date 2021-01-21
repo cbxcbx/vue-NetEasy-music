@@ -3,12 +3,17 @@ import { Button, Message } from 'element-ui';
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import VueLazyload from 'vue-lazyload'
 
 import 'element-ui/lib/theme-chalk/index.css';
 import 'assets/font-icon/iconfont.css'
 import 'common/style/index.scss'
 
 Vue.config.productionTip = false
+
+Vue.use(VueLazyload, {
+  loading: require('./assets/images/default.png')
+})
 
 // 在调用 Vue.use 前，给 Message 添加 install 方法
 Message.install = function (Vue, options) {

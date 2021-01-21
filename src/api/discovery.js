@@ -17,7 +17,7 @@ export function getPersonalized(limit) {
   return axios.get(url)
 }
 
-export function getNewestAlbum() {
-  let url = HOST + Url.GET_NEWEST_ALBUM;
+export function getAlbum() {
+  let url = HOST + Url.GET_ALBUM;
   return axios.get(url)
 }

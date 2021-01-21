@@ -49,7 +49,7 @@ export default {
     this._initScroll();
   },
   watch: {
-    data() {
+    data(newValue) {
       setTimeout(() => {
         this.refresh();
       }, this.refreshDelay);

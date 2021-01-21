@@ -17,6 +17,6 @@ export default {
   // 获取推荐歌单
   GET_PERSONALIZED: '/personalized',
 
-  // 获取最新专辑
-  GET_NEWEST_ALBUM: '/album/newest'
+  // 获取数字专辑-新碟上架
+  GET_ALBUM: '/album/list'
 }

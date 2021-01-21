@@ -1,41 +1,35 @@
 <template>
   <div class="discovery">
-    <Scroll class="discovery-content" :data="personalizedList">
+    <Scroll class="discovery-content" :data="discoveryList" ref="scroll">
       <div>
         <div class="slider-wrapper">
           <div v-if="bannerList.length" class="slider-content">
             <Slider>
-              <div
-                class="slider-item"
-                v-for="item in bannerList"
-                :key="item.targetId"
-              >
+              <div class="slider-item" v-for="item in bannerList" :key="item.targetId">
                 <a :href="item.url">
-                  <img :src="item.imageUrl" alt />
+                  <img @load="loadImage" :src="item.imageUrl"/>
                 </a>
               </div>
             </Slider>
           </div>
         </div>
-        <div class="tab">
-          <div class="tab-item" v-for="icon in iconList" :key="icon.id">
-            <img :src="icon.iconUrl">
-            <router-link tag="span" class="nav-icon" :to="icon.url"
-              >{{ icon.name }}</router-link
-            >
+        <Scroll :scrollX="true" :data="iconList">
+          <div class="tab">
+            <div class="tab-item" v-for="icon in iconList" :key="icon.id">
+              <div class="icon-image">
+                <img :src="icon.iconUrl" width="40" height="40"/>
+              </div>
+              <router-link tag="div" class="nav-icon" :to="navIconUrl[icon.name]">{{ icon.name }}</router-link>
+            </div>
           </div>
-        </div>
+        </Scroll>
         <div class="personalized-list">
           <h1>推荐歌单</h1>
           <ul>
-            <li
-              v-for="item in personalizedList"
-              :key="item.id"
-              class="list-item"
-            >
+            <li v-for="item in personalizedList" :key="item.id" class="list-item">
               <div class="image">
                 <div class="gradients"></div>
-                <img :src="item.picUrl" />
+                <img v-lazy="item.picUrl" width="116" height="116" />
               </div>
               <div class="play-count">
                 <span class="iconfont icon-shiting"></span>
@@ -48,6 +42,9 @@
           </ul>
         </div>
       </div>
+      <div class="loading-container" v-show="!personalizedList.length">
+        <loading></loading>
+      </div>
     </Scroll>
   </div>
 </template>
@@ -55,17 +52,21 @@
 <script>
 import Scroll from "base/scroll/scroll";
 import Slider from "base/slider/slider";
+import loading from "base/loading/loading";
 import { getBanner, getDragonBall, getPersonalized } from "api/discovery";
 import { ERR_OK } from "api/config";
+import { navIconUrl } from "common/js/url/nav-icon";
 export default {
   data() {
     return {
       bannerList: [],
       iconList: [],
-      personalizedList: []
+      personalizedList: [],
+      navIconUrl: ""
     };
   },
   created() {
+    this.navIconUrl = navIconUrl;
     setTimeout(() => {
       this._getBanner();
       this._getDragonBall();
@@ -83,7 +84,7 @@ export default {
     _getDragonBall() {
       getDragonBall().then(res => {
         if (res.data.code === ERR_OK) {
-          console.log(res.data);
+          // console.log(res.data);
           this.iconList = res.data.data;
         }
       });
@@ -95,11 +96,25 @@ export default {
           this.personalizedList = res.data.result;
         }
       });
+    },
+    loadImage() {
+      if (!this.checkLoaded) {
+        this.checkloaded = true;
+        setTimeout(() => {
+          this.$refs.scroll.refresh();
+        }, 20);
+      }
+    }
+  },
+  computed: {
+    discoveryList() {
+      return this.personalizedList.concat(this.iconList);
     }
   },
   components: {
     Scroll,
-    Slider
+    Slider,
+    loading
   }
 };
 </script>
@@ -112,6 +127,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 80px;
+  z-index: 1;
   .discovery-content {
     height: 100%;
     overflow: hidden;
@@ -127,6 +143,27 @@ export default {
         left: 0;
         width: 100%;
         height: 100%;
+      }
+    }
+    .tab {
+      display: inline-block;
+      white-space: nowrap;
+      border-bottom: 1px solid $tab-border;
+      .tab-item {
+        display: inline-block;
+        padding: 10px;
+        width: 70px;
+        text-align: center;
+
+        img {
+          background-color: $orange;
+          border-radius: 50%;
+        }
+        .nav-icon {
+          margin-top: 5px;
+          font-size: 12px;
+          color: $tab-font-gray;
+        }
       }
     }
     .personalized-list {
@@ -187,6 +224,12 @@ export default {
         }
       }
     }
+  }
+  .loading-container {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 </style>
