@@ -66,4 +66,8 @@ const router = new VueRouter({
   routes
 })
 
+// 登录验证
+// router.beforeEach((to, from, next) => {
+
+// });
 export default router

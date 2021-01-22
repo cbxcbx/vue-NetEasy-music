@@ -67,7 +67,7 @@ export default {
               type: "success",
               message: "登录成功"
             });
-            this.$router.push('/recommend');
+            this.$router.push('/home');
           } else {
             this.$message({
               type: "error",

@@ -8,6 +8,9 @@ export default {
   // 手机登录
   LOGIN_CELLPHONE: '/login/cellphone',
 
+  // 查看登录状态
+  LOGIN_STATUS: '/login/status',
+
   // 获取Banner
   GET_BANNER: '/banner',
 

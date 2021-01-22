@@ -7,17 +7,17 @@
             <Slider>
               <div class="slider-item" v-for="item in bannerList" :key="item.targetId">
                 <a :href="item.url">
-                  <img @load="loadImage" :src="item.imageUrl"/>
+                  <img @load="loadImage" :src="item.imageUrl" />
                 </a>
               </div>
             </Slider>
           </div>
         </div>
-        <Scroll :scrollX="true" :data="iconList">
+        <Scroll :scrollX="true" :data="iconList" :click="false">
           <div class="tab">
             <div class="tab-item" v-for="icon in iconList" :key="icon.id">
-              <div class="icon-image">
-                <img :src="icon.iconUrl" width="40" height="40"/>
+              <div class="icon-image" @click="navigate(navIconUrl[icon.name])">
+                <img :src="icon.iconUrl" width="40" height="40" />
               </div>
               <router-link tag="div" class="nav-icon" :to="navIconUrl[icon.name]">{{ icon.name }}</router-link>
             </div>
@@ -29,7 +29,7 @@
             <li v-for="item in personalizedList" :key="item.id" class="list-item">
               <div class="image">
                 <div class="gradients"></div>
-                <img v-lazy="item.picUrl" width="116" height="116" />
+                <img v-lazy="item.picUrl" />
               </div>
               <div class="play-count">
                 <span class="iconfont icon-shiting"></span>
@@ -104,6 +104,9 @@ export default {
           this.$refs.scroll.refresh();
         }, 20);
       }
+    },
+    navigate(path) {
+      this.$router.push(path);
     }
   },
   computed: {

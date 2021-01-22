@@ -15,7 +15,7 @@
             <Scroll :scrollX="true" class="album-wrapper" :data="newestAlbum">
               <div class="newest-album" ref="newestAlbum">
                 <div class="album-item" v-for="item in newestAlbum" :key="item.albumId">
-                  <img :src="item.coverUrl" />
+                  <img v-lazy="item.coverUrl" width="120" height="120"/>
                   <p class="album-name">{{ item.albumName }}</p>
                   <p class="album-artist">{{ item.artistName}}</p>
                 </div>
@@ -118,8 +118,6 @@ export default {
         width: 140px;
         height: 210px;
         img {
-          width: 120px;
-          height: 120px;
           border-radius: 10%;
         }
         .album-name {
