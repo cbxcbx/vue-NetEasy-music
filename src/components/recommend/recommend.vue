@@ -1,8 +1,7 @@
 <template>
   <transition name="fade" appear>
     <div class="recommend">
-      <div class="recommend-wrapper">
-        <!-- <Scroll class="recommend-content"> -->
+      <Scroll class="recommend-content" :data="refrenshData">
         <div>
           <div class="recommend-item recommend-header">
             <div class="back-btn">
@@ -15,22 +14,32 @@
             <Scroll :scrollX="true" class="album-wrapper" :data="newestAlbum">
               <div class="newest-album" ref="newestAlbum">
                 <div class="album-item" v-for="item in newestAlbum" :key="item.albumId">
-                  <img v-lazy="item.coverUrl" width="120" height="120"/>
+                  <img v-lazy="item.coverUrl" width="120" height="120" />
                   <p class="album-name">{{ item.albumName }}</p>
                   <p class="album-artist">{{ item.artistName}}</p>
                 </div>
               </div>
             </Scroll>
           </div>
-          <div class="recommend-item">
+          <div class="recommend-item recommend-songs">
             <h2>For you</h2>
+            <ul>
+              <li v-for="song in recommendSongs" :key="song.id" class="song">
+                <div class="image">
+                  <img v-lazy="song.al.picUrl" width="60" height="60" />
+                </div>
+                <div class="text">
+                  <p class="song-name">{{ song.name }}</p>
+                  <p class="singer">{{ _getSongSinger(song.ar)}}</p>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
-        <div class="loading-container" v-show="!newestAlbum.length">
+        <div class="loading-container" v-show="!newestAlbum.length || !recommendSongs.length">
           <loading></loading>
         </div>
-        <!-- </Scroll> -->
-      </div>
+      </Scroll>
     </div>
   </transition>
 </template>
@@ -39,17 +48,18 @@
 import Scroll from "base/scroll/scroll";
 import Search from "@/search/search";
 import loading from "base/loading/loading";
-import { getAlbum } from "api/discovery";
+import { getAlbum, getRecommendSongs } from "api/discovery";
 import { ERR_OK } from "api/config";
 export default {
   data() {
     return {
       newestAlbum: [],
-      bannerList: []
+      recommendSongs: []
     };
   },
   created() {
     this._getAlbum();
+    this._getRecommendSongs();
   },
   methods: {
     _getAlbum() {
@@ -60,8 +70,28 @@ export default {
         }
       });
     },
+    _getRecommendSongs() {
+      getRecommendSongs().then(res => {
+        if (res.data.code === ERR_OK) {
+          // console.log(res.data);
+          this.recommendSongs = res.data.data.dailySongs;
+        }
+      });
+    },
+    _getSongSinger(ar) {
+      let singer = "";
+      ar.forEach(item => {
+        singer = singer + item.name + "/";
+      });
+      return singer.substr(0, singer.length - 1);
+    },
     goback() {
       this.$router.go(-1);
+    }
+  },
+  computed: {
+    refrenshData() {
+      return this.newestAlbum.concat(this.recommendSongs);
     }
   },
   watch: {
@@ -89,7 +119,9 @@ export default {
   bottom: 80px;
   z-index: 2;
   background-color: $bg-color;
-  .recommend-wrapper {
+  .recommend-content {
+    height: 100%;
+    overflow: hidden;
     h2 {
       margin: 20px auto;
       width: 90%;
@@ -134,12 +166,42 @@ export default {
         }
       }
     }
-  }
-  .loading-container {
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
+    .recommend-songs {
+      .song {
+        display: flex;
+        padding: 0 20px 20px 20px;
+        .image {
+          width: 60px;
+          height: 60px;
+          flex: 0 0 60px;
+          margin-right: 20px;
+          img {
+            border-radius: 10px;
+          }
+        }
+        .text {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          flex: 1;
+          .song-name {
+            margin-bottom: 10px;
+            font-size: 16px;
+            line-height: 20px;
+          }
+          .singer {
+            font-size: 14px;
+            color: $gray;
+          }
+        }
+      }
+    }
+    .loading-container {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 }
 .fade-enter-active,

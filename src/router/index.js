@@ -3,12 +3,14 @@ import VueRouter from 'vue-router'
 import Homepage from 'pages/homepage/homepage'
 import UserLogin from 'pages/userLogin/userLogin'
 import Main from 'pages/main/main'
-// import Discovery from '@/discovery/discovery'
 import Welcome from '@/welcome/welcome'
 import Recommend from '@/recommend/recommend'
 import Singer from '@/singer/singer'
 import Rank from '@/rank/rank'
 import Test from '@/test'
+
+import { Message } from 'element-ui';
+import { getLoginToken } from 'common/js/util/getToken'
 Vue.use(VueRouter)
 
 const routes = [
@@ -32,7 +34,10 @@ const routes = [
           {
             path: 'recommend',
             name: 'Recommend',
-            component: Recommend
+            component: Recommend,
+            meta: {
+              requireAuth: true
+            }
           }
         ]
       },
@@ -67,7 +72,32 @@ const router = new VueRouter({
 })
 
 // 登录验证
-// router.beforeEach((to, from, next) => {
-
-// });
+router.beforeEach((to, from, next) => {
+  let isLogin = getLoginToken();
+  if (to.matched.some(m => m.meta.requireAuth)) {
+    if (isLogin) {
+      next()
+    } else {
+      next({ path: '/user-login' });
+      Message({
+        type: "error",
+        message: "请先登录"
+      });
+    }
+  } else {
+    if (to.path === '/user-login') {
+      if (isLogin) {
+        next({ path: '/home' })
+        Message({
+          type: "warning",
+          message: "当前已有登录账号"
+        });
+      } else {
+        next()
+      }
+    } else {
+      next()
+    }
+  }
+});
 export default router

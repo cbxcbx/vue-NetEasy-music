@@ -21,5 +21,8 @@ export default {
   GET_PERSONALIZED: '/personalized',
 
   // 获取数字专辑-新碟上架
-  GET_ALBUM: '/album/list'
+  GET_ALBUM: '/album/list',
+
+  // 获取日推歌曲
+  GET_RECOMMEND_SONGS: '/recommend/songs'
 }
