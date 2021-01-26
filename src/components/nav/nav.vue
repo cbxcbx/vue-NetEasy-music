@@ -23,7 +23,8 @@
 </template>
 
 <script>
-export default {};
+export default {
+};
 </script>
 
 <style lang="scss" scoped>
@@ -46,25 +47,26 @@ export default {};
   left: 0;
   right: 0;
   z-index: 10;
-  background-color: $light-orange;
   height: 80px;
-  border-radius: 25px 25px 0 0;
 
   .nav-content {
     display: flex;
-    padding: 15px 10px 0 40px;
+    padding: 0 10px 0 40px;
+    height: 100%;
+    background-color: $light-orange;
+    border-radius: 25px 25px 0 0;
 
     .search-container {
       position: relative;
       width: 30%;
+      padding-top: 15px;
 
       .icon-chazhao {
         position: absolute;
-        top: 50%;
+        top: 23px;
         left: 5px;
         color: $white;
         font-size: 20px;
-        transform: translateY(-50%);
       }
 
       input {
@@ -86,10 +88,10 @@ export default {};
       display: flex;
       width: 70%;
       justify-content: center;
-      align-items: center;
 
       .nav-item {
         flex: 1;
+        padding-top: 23px;
         color: $white;
         text-align: center;
       }

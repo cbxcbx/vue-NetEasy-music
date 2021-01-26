@@ -2,7 +2,9 @@ import axios from "axios"
 import { HOST } from './config'
 import Url from './url.js'
 
+// 自动带上浏览器cookie
 axios.defaults.withCredentials = true;
+
 // 获取首页banner
 export function getBanner() {
   let url = HOST + Url.GET_BANNER;
@@ -17,7 +19,7 @@ export function getDragonBall() {
 
 // 获取推荐歌单
 export function getPersonalized(limit) {
-  let url = limit ? HOST + Url.GET_PERSONALIZED + '?limit=' + limit : HOST + Url.GET_PERSONALIZED;
+  let url = HOST + (limit ? Url.GET_PERSONALIZED + '?limit=' + limit : Url.GET_PERSONALIZED);
   return axios.get(url)
 }
 

@@ -24,5 +24,8 @@ export default {
   GET_ALBUM: '/album/list',
 
   // 获取日推歌曲
-  GET_RECOMMEND_SONGS: '/recommend/songs'
+  GET_RECOMMEND_SONGS: '/recommend/songs',
+
+  // 获取热门歌手
+  GET_TOP_ARTISTS: '/top/artists'
 }
