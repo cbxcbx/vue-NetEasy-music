@@ -12,8 +12,8 @@
       </li>
     </ul>
     <div class="list-shortcut">
-      <ul>
-        <li v-for="(item,index) in shortcutList" class="item" :key="index">{{ item }}</li>
+      <ul @touchstart.stop.prevent="onShortcutTouchStart" @touchmove.stop.prevent="onShortcutTouchMove" @touchend.stop>
+        <li v-for="(item,index) in shortcutList" class="item" :key="index" :data-index="index">{{ item }}</li>
       </ul>
     </div>
     <div class="loading-container" v-show="!data.length">
@@ -25,6 +25,7 @@
 <script>
 import Loading from "base/loading/loading";
 import Scroll from "base/scroll/scroll";
+// import {getData}from "common/js/utli/dom"
 export default {
   props: {
     data: {
@@ -34,6 +35,11 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    onShortcutTouchStart(e) {
+      // let anchorIndex= getData(e.target, 'index');
+    }
   },
   computed: {
     shortcutList() {
