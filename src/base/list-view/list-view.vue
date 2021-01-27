@@ -12,8 +12,18 @@
       </li>
     </ul>
     <div class="list-shortcut">
-      <ul @touchstart.stop.prevent="onShortcutTouchStart" @touchmove.stop.prevent="onShortcutTouchMove" @touchend.stop>
-        <li v-for="(item,index) in shortcutList" class="item" :key="index" :data-index="index">{{ item }}</li>
+      <ul
+        @touchstart.stop.prevent="onShortcutTouchStart"
+        @touchmove.stop.prevent="onShortcutTouchMove"
+        @touchend.stop
+      >
+        <li
+          v-for="(item,index) in shortcutList"
+          class="item"
+          :key="index"
+          :data-index="index"
+          :class="{ 'current':currentIndex === index }"
+        >{{ item }}</li>
       </ul>
     </div>
     <div class="loading-container" v-show="!data.length">
@@ -25,7 +35,7 @@
 <script>
 import Loading from "base/loading/loading";
 import Scroll from "base/scroll/scroll";
-// import {getData}from "common/js/utli/dom"
+import { getData } from "common/js/util/dom";
 export default {
   props: {
     data: {
@@ -34,12 +44,27 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      currentIndex: 0
+    };
+  },
+  created() {
+    this.touch = {};
   },
   methods: {
     onShortcutTouchStart(e) {
-      // let anchorIndex= getData(e.target, 'index');
-    }
+      let anchorIndex = getData(e.target, "index");
+      let firstTouch = e.touches[0];
+      this.touch.y1 = firstTouch.pageY;
+      this.touch.anchorIndex = anchorIndex;
+
+      this._scrollTo(anchorIndex);
+    },
+    onShortcutTouchMove(e) {
+      let firstTouch = e.touches[0];
+      this.touch.y2 = firstTouch.pageY;
+    },
+    _scrollTo(index) {}
   },
   computed: {
     shortcutList() {
@@ -107,6 +132,9 @@ export default {
       line-height: 1;
       font-size: 12px;
       color: $color-text-l;
+      &.current {
+        color: #9e1d1d;
+      }
     }
   }
 }
