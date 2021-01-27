@@ -1,10 +1,26 @@
 <template>
-  <Scroll class="list-view" :data="data">
+  <Scroll
+    class="list-view"
+    :data="data"
+    :probeType="probeType"
+    :listenScroll="listenScroll"
+    @scorll="scroll"
+    ref="listview"
+  >
     <ul>
-      <li v-for="(group,index) in data" :key="index" class="list-group">
-        <h2 class="list-group-title">{{group.title}}</h2>
+      <li
+        v-for="(group, index) in data"
+        :key="index"
+        class="list-group"
+        ref="listGroup"
+      >
+        <h2 class="list-group-title">{{ group.title }}</h2>
         <ul>
-          <li v-for="(item,index) in group.items" class="list-group-item" :key="index">
+          <li
+            v-for="(item, index) in group.items"
+            class="list-group-item"
+            :key="index"
+          >
             <img v-lazy="item.avatar" class="avatar" width="50" height="50" />
             <span class="singer-name">{{ item.name }}</span>
           </li>
@@ -18,12 +34,14 @@
         @touchend.stop
       >
         <li
-          v-for="(item,index) in shortcutList"
+          v-for="(item, index) in shortcutList"
           class="item"
           :key="index"
           :data-index="index"
-          :class="{ 'current':currentIndex === index }"
-        >{{ item }}</li>
+          :class="{ current: currentIndex === index }"
+        >
+          {{ item }}
+        </li>
       </ul>
     </div>
     <div class="loading-container" v-show="!data.length">
@@ -36,6 +54,8 @@
 import Loading from "base/loading/loading";
 import Scroll from "base/scroll/scroll";
 import { getData } from "common/js/util/dom";
+
+const CUTHEIGHT = 18;
 export default {
   props: {
     data: {
@@ -45,13 +65,20 @@ export default {
   },
   data() {
     return {
+      scrollY: -1,
       currentIndex: 0
     };
   },
   created() {
+    this.probeType = 3;
+    this.listenScroll = true
     this.touch = {};
+    this.listHeight = [];
   },
   methods: {
+    scroll(pos) {
+      this.scrollY = pos.y;
+    },
     onShortcutTouchStart(e) {
       let anchorIndex = getData(e.target, "index");
       let firstTouch = e.touches[0];
@@ -63,14 +90,33 @@ export default {
     onShortcutTouchMove(e) {
       let firstTouch = e.touches[0];
       this.touch.y2 = firstTouch.pageY;
+      let delta = (this.touch.y2 - this.touch.y1) / CUTHEIGHT | 0;
+      let anchorIndex = parseInt(this.touch.anchorIndex) + delta;
+
+      this._scrollTo(anchorIndex);
     },
-    _scrollTo(index) {}
+    _scrollTo(index) {
+      if (!index && index !== 0) {
+        return false;
+      }
+
+      if (index < 0) {
+        index = 0;
+      }
+
+      console.log(index);
+      this.$refs.listview.scrollToElement(this.$refs.listGroup[index], 0);
+    }
   },
   computed: {
     shortcutList() {
       return this.data.map(group => {
         return group.title.substr(0, 1);
       });
+    }
+  },
+  watch: {
+    scrollY() {
     }
   },
   components: {
@@ -130,10 +176,10 @@ export default {
     .item {
       padding: 3px;
       line-height: 1;
-      font-size: 12px;
+      font-size: $font-size-small;
       color: $color-text-l;
       &.current {
-        color: #9e1d1d;
+        color: $singer-shortcut-current;
       }
     }
   }
