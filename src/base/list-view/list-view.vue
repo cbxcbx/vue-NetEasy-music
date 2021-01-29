@@ -4,23 +4,14 @@
     :data="data"
     :probeType="probeType"
     :listenScroll="listenScroll"
-    @scorll="scroll"
+    @scroll="scroll"
     ref="listview"
   >
     <ul>
-      <li
-        v-for="(group, index) in data"
-        :key="index"
-        class="list-group"
-        ref="listGroup"
-      >
+      <li v-for="(group, index) in data" :key="index" class="list-group" ref="listGroup">
         <h2 class="list-group-title">{{ group.title }}</h2>
         <ul>
-          <li
-            v-for="(item, index) in group.items"
-            class="list-group-item"
-            :key="index"
-          >
+          <li v-for="(item, index) in group.items" class="list-group-item" :key="index">
             <img v-lazy="item.avatar" class="avatar" width="50" height="50" />
             <span class="singer-name">{{ item.name }}</span>
           </li>
@@ -39,10 +30,11 @@
           :key="index"
           :data-index="index"
           :class="{ current: currentIndex === index }"
-        >
-          {{ item }}
-        </li>
+        >{{ item }}</li>
       </ul>
+    </div>
+    <div class="list-fixed" ref="fixed" v-show="fixedTitle">
+      <div class="fixed-title">{{fixedTitle}}</div>
     </div>
     <div class="loading-container" v-show="!data.length">
       <Loading></Loading>
@@ -55,7 +47,8 @@ import Loading from "base/loading/loading";
 import Scroll from "base/scroll/scroll";
 import { getData } from "common/js/util/dom";
 
-const CUTHEIGHT = 18;
+const TITLE_HEIGHT = 25
+const ANCHOR_HEIGHT = 18;
 export default {
   props: {
     data: {
@@ -66,16 +59,28 @@ export default {
   data() {
     return {
       scrollY: -1,
-      currentIndex: 0
+      currentIndex: 0,
+      diff: -1
     };
   },
   created() {
     this.probeType = 3;
-    this.listenScroll = true
+    this.listenScroll = true;
     this.touch = {};
     this.listHeight = [];
   },
   methods: {
+    _calculateHeight() {
+      this.listHeight = [];
+      const listGroup = this.$refs.listGroup;
+      let height = 0;
+      this.listHeight.push(height);
+      for (let i = 0; i < listGroup.length; i++) {
+        let item = listGroup[i];
+        height += item.clientHeight;
+        this.listHeight.push(height);
+      }
+    },
     scroll(pos) {
       this.scrollY = pos.y;
     },
@@ -90,7 +95,7 @@ export default {
     onShortcutTouchMove(e) {
       let firstTouch = e.touches[0];
       this.touch.y2 = firstTouch.pageY;
-      let delta = (this.touch.y2 - this.touch.y1) / CUTHEIGHT | 0;
+      let delta = ((this.touch.y2 - this.touch.y1) / ANCHOR_HEIGHT) | 0;
       let anchorIndex = parseInt(this.touch.anchorIndex) + delta;
 
       this._scrollTo(anchorIndex);
@@ -102,10 +107,12 @@ export default {
 
       if (index < 0) {
         index = 0;
+      } else if (index > this.listHeight.length - 2) {
+        index = this.listHeight.length - 2;
       }
 
-      console.log(index);
       this.$refs.listview.scrollToElement(this.$refs.listGroup[index], 0);
+      this.scrollY = this.$refs.listview.scroll.y;
     }
   },
   computed: {
@@ -113,10 +120,48 @@ export default {
       return this.data.map(group => {
         return group.title.substr(0, 1);
       });
+    },
+    fixedTitle() {
+      if (this.scrollY > 0) {
+        return "";
+      }
+      return this.data[this.currentIndex]
+        ? this.data[this.currentIndex].title
+        : "";
     }
   },
   watch: {
-    scrollY() {
+    data() {
+      setTimeout(() => {
+        this._calculateHeight();
+      }, 20);
+    },
+    scrollY(newY) {
+      const listHeight = this.listHeight;
+      if (newY > 0) {
+        this.currentIndex = 0;
+      }
+
+      for (let i = 0; i < listHeight.length - 1; i++) {
+        let height1 = listHeight[i];
+        let height2 = listHeight[i + 1];
+        if (-newY >= height1 && -newY < height2) {
+          this.currentIndex = i;
+          this.diff = height2 + newY;
+          return;
+        }
+      }
+
+      this.currentIndex = listHeight.length - 2;
+    },
+    diff(newVal) {
+      let fixedTop =
+        newVal > 0 && newVal < TITLE_HEIGHT ? newVal - TITLE_HEIGHT : 0;
+      if (this.fixedTop === fixedTop) {
+        return;
+      }
+      this.fixedTop = fixedTop;
+      this.$refs.fixed.style.transform = `translate3d(0,${fixedTop}px,0)`;
     }
   },
   components: {
@@ -129,6 +174,7 @@ export default {
 <style lang="scss" scoped>
 @import "common/style/variable.scss";
 .list-view {
+  position: relative;
   height: 100%;
   overflow: hidden;
   background-color: $singer-list-bg;
@@ -159,7 +205,7 @@ export default {
       }
       &:last-child {
         border: none;
-        margin-bottom: 10px;
+        padding-bottom: 15px;
       }
     }
   }
@@ -181,6 +227,20 @@ export default {
       &.current {
         color: $singer-shortcut-current;
       }
+    }
+  }
+  .list-fixed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    .fixed-title {
+      padding-left: 12px;
+      height: 25px;
+      line-height: 25px;
+      font-size: $font-size-small;
+      color: $color-text-l;
+      background: $light-orange;
     }
   }
 }
