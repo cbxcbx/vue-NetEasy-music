@@ -5,7 +5,7 @@
         <div class="slider-wrapper">
           <div v-if="bannerList.length" class="slider-content">
             <Slider>
-              <div class="slider-item" v-for="item in bannerList" :key="item.targetId">
+              <div class="slider-item" v-for="(item, index) in bannerList" :key="index">
                 <a :href="item.url">
                   <img @load="loadImage" :src="item.imageUrl" />
                 </a>

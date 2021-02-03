@@ -198,13 +198,4 @@ export default {
     }
   }
 }
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.5s;
-}
-/* .fade-leave-active below version 2.1.8 */
-.fade-enter,
-.fade-leave-to {
-  transform: translate3d(100%, 0, 0);
-}
 </style>

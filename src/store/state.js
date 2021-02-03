@@ -1,5 +1,6 @@
 const state = {
-  isLogin: false
+  isLogin: false,
+  singer: {}
 }
 
 export default state

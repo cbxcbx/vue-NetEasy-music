@@ -11,7 +11,12 @@
       <li v-for="(group, index) in data" :key="index" class="list-group" ref="listGroup">
         <h2 class="list-group-title">{{ group.title }}</h2>
         <ul>
-          <li v-for="(item, index) in group.items" class="list-group-item" :key="index">
+          <li
+            v-for="(item, index) in group.items"
+            class="list-group-item"
+            :key="index"
+            @click="selectItem(item)"
+          >
             <img v-lazy="item.avatar" class="avatar" width="50" height="50" />
             <span class="singer-name">{{ item.name }}</span>
           </li>
@@ -47,7 +52,7 @@ import Loading from "base/loading/loading";
 import Scroll from "base/scroll/scroll";
 import { getData } from "common/js/util/dom";
 
-const TITLE_HEIGHT = 25
+const TITLE_HEIGHT = 25;
 const ANCHOR_HEIGHT = 18;
 export default {
   props: {
@@ -113,6 +118,9 @@ export default {
 
       this.$refs.listview.scrollToElement(this.$refs.listGroup[index], 0);
       this.scrollY = this.$refs.listview.scroll.y;
+    },
+    selectItem(item) {
+      this.$emit("select", item);
     }
   },
   computed: {

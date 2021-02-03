@@ -7,6 +7,7 @@ import Welcome from '@/welcome/welcome'
 import Recommend from '@/recommend/recommend'
 import Singer from '@/singer/singer'
 import Rank from '@/rank/rank'
+import SingerDetail from '@/singer-detail/singer-detail'
 import Test from '@/test'
 
 import { Message } from 'element-ui';
@@ -43,8 +44,13 @@ const routes = [
       },
       {
         path: '/singer',
-        name: 'Singer',
-        component: Singer
+        component: Singer,
+        children: [
+          {
+            path: ':id',
+            component: SingerDetail
+          }
+        ]
       },
       {
         path: '/rank',
