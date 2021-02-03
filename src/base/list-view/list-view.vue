@@ -148,6 +148,7 @@ export default {
       const listHeight = this.listHeight;
       if (newY > 0) {
         this.currentIndex = 0;
+        return
       }
 
       for (let i = 0; i < listHeight.length - 1; i++) {

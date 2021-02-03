@@ -27,5 +27,8 @@ export default {
   GET_RECOMMEND_SONGS: '/recommend/songs',
 
   // 获取热门歌手
-  GET_TOP_ARTISTS: '/top/artists'
+  GET_TOP_ARTISTS: '/top/artists',
+
+  // 获取歌手详情
+  GET_SINGER_DETAIL: '/artist/detail'
 }
