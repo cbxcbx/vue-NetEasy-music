@@ -1,8 +1,8 @@
 <template>
   <div class="song-list">
     <ul>
-      <li class="song" v-for="(song,index) in songs" :key="index">
-        <p class="count">{{index + 1}}</p>
+      <li class="song" v-for="(song, index) in songs" :key="index">
+        <p class="count">{{ index + 1 }}</p>
         <div class="content">
           <p class="name">{{ song.name }}</p>
           <p class="desc">{{ getDesc(song) }}</p>
@@ -40,13 +40,15 @@ export default {
     display: flex;
     align-items: center;
     height: 60px;
-    border-bottom: 1px solid rgb(228, 228, 228);
+    // border-bottom: 1px solid rgb(228, 228, 228);
 
     .count {
-      margin-right: 10px;
-      width: 40px;
-      height: 40px;
-      line-height: 40px;
+      margin-right: 20px;
+      width: 45px;
+      height: 45px;
+      line-height: 45px;
+      font-size: $font-size-medium-x;
+      font-weight: bold;
       color: $orange;
       text-align: center;
       background-color: $singer-detail-song-list-bg;
@@ -58,14 +60,14 @@ export default {
       overflow: hidden;
       .name {
         margin-top: 4px;
-        font-size: 14px;
+        font-size: $font-size-medium;
         font-weight: bold;
         color: $black;
         width: 80%;
       }
       .desc {
         width: 80%;
-        font-size: 12px;
+        font-size: $font-size-small;
         color: $gray;
       }
     }

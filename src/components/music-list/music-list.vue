@@ -9,7 +9,13 @@
         <div class="filter"></div>
       </div>
     </div>
-    <Scroll :data="songs" :probe-type="probeType" class="list">
+    <Scroll
+      :data="songs"
+      :probe-type="probeType"
+      :listen-scroll="listenScroll"
+      @scroll="scroll"
+      class="list"
+    >
       <div class="song-list-wrapper">
         <song-list :songs="songs"></song-list>
       </div>
@@ -37,7 +43,9 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      scrollY: -1
+    };
   },
   created() {
     this.probeType = 3;
@@ -46,6 +54,14 @@ export default {
   methods: {
     back() {
       this.$router.back();
+    },
+    scroll(pos) {
+      this.scrollY = pos.y;
+    }
+  },
+  watch: {
+    scrollY(newY) {
+      console.log(newY);
     }
   },
   components: {
