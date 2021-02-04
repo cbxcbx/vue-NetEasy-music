@@ -30,5 +30,5 @@ export default {
   GET_TOP_ARTISTS: '/top/artists',
 
   // 获取歌手详情
-  GET_SINGER_DETAIL: '/artist/detail'
+  GET_SINGER_DETAIL: '/artists'
 }

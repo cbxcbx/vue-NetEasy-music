@@ -1,6 +1,6 @@
 <template>
   <transition appear name="fade">
-    <music-list></music-list>
+    <music-list :title="title" :bgImage="bgStyle" :songs="songList"></music-list>
   </transition>
 </template>
 
@@ -8,10 +8,13 @@
 import MusicList from "@/music-list/music-list";
 import { getSingerDetail } from "api/singer";
 import { ERR_OK } from "api/config";
-import { mapGetters } from 'vuex';
+import { createSong } from "common/js/format/song";
+import { mapGetters } from "vuex";
 export default {
   data() {
-    return {};
+    return {
+      songList: []
+    };
   },
   created() {
     this._getDetail();
@@ -19,20 +22,35 @@ export default {
   methods: {
     _getDetail() {
       if (!this.singer.id) {
-        this.$router.push('/singer');
-        return false
+        this.$router.push("/singer");
       }
-      getSingerDetail(this.singer.id).then(res => {
-        if (res.data.code === ERR_OK) {
-          console.log(res.data);
-        }
-      }).catch(error => {
-        console.log(error);
-      })
+      getSingerDetail(this.singer.id)
+        .then(res => {
+          if (res.data.code === ERR_OK) {
+            // console.log(res.data.hotSongs);
+            this.songList = this._normalizeSong(res.data.hotSongs);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    _normalizeSong(list) {
+      let ret = [];
+      list.map(item => {
+        ret.push(createSong(item));
+      });
+      return ret;
     }
   },
   computed: {
-    ...mapGetters(['singer'])
+    title() {
+      return this.singer.name;
+    },
+    bgStyle() {
+      return `background-image: url(${this.singer.avatar})`;
+    },
+    ...mapGetters(["singer"])
   },
   components: {
     MusicList
