@@ -5,8 +5,9 @@
         <i class="iconfont icon-back" @click="back"></i>
       </div>
       <h1 class="title">{{ title }}</h1>
-      <div class="bg-image" :style="bgImage">
-        <div class="filter"></div>
+      <div class="bg-layer" ref="layer"></div>
+      <div class="bg-image" :style="bgImage" ref="bgImage">
+        <div class="filter" ref="filter"></div>
       </div>
     </div>
     <Scroll
@@ -26,7 +27,11 @@
 <script>
 import Scroll from "base/scroll/scroll";
 import SongList from "base/song-list/song-list";
+import { prefixStyle } from "common/js/util/dom";
 
+const RESERVED_HEIGHT = 42 + 51;
+const transform = prefixStyle("transform");
+const backdrop = prefixStyle("backdrop-filter");
 export default {
   props: {
     title: {
@@ -51,6 +56,10 @@ export default {
     this.probeType = 3;
     this.listenScroll = true;
   },
+  mounted() {
+    this.imageHeight = this.$refs.bgImage.clientHeight;
+    this.minTranslateY = -this.imageHeight + RESERVED_HEIGHT;
+  },
   methods: {
     back() {
       this.$router.back();
@@ -61,7 +70,23 @@ export default {
   },
   watch: {
     scrollY(newY) {
-      console.log(newY);
+      let translateY = Math.max(this.minTranslateY, newY);
+      let scale = 1;
+      let zIndex = 10;
+      let blur = 0;
+      let percent = Math.abs(newY / this.imageHeight);
+      if (newY > 0) {
+        scale = 1 + percent;
+        zIndex = 10;
+      } else {
+        blur = Math.min(20, percent * 20);
+      }
+
+      this.$refs.layer.style[transform] = `translate3d(0,${translateY}px,0)`;
+      this.$refs.filter.style[backdrop] = `blur(${blur}px)`;
+
+      this.$refs.bgImage.style[transform] = `scale(${scale})`;
+      this.$refs.bgImage.style.zIndex = zIndex;
     }
   },
   components: {
