@@ -22,6 +22,7 @@ export function createSong(music) {
   return new Song({
     id: music.id,
     singer: singerName(music.ar),
+    aliaName: music.alia.join('-'),
     name: music.name,
     album: music.al.name,
     image: music.al.picUrl

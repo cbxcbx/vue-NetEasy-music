@@ -1,35 +1,43 @@
 <template>
   <div class="music-list">
     <div class="header">
-      <div class="back">
-        <i class="iconfont icon-back" @click="back"></i>
+      <div class="header-bg" ref="headerBg">
+        <div class="back">
+          <i class="iconfont icon-back" @click="back" ref="backBtn"></i>
+        </div>
+        <h1 class="title">{{ title }}</h1>
       </div>
-      <h1 class="title">{{ title }}</h1>
-      <div class="bg-layer" ref="layer"></div>
       <div class="bg-image" :style="bgImage" ref="bgImage">
         <div class="filter" ref="filter"></div>
       </div>
     </div>
-    <Scroll
-      :data="songs"
-      :probe-type="probeType"
-      :listen-scroll="listenScroll"
-      @scroll="scroll"
-      class="list"
-    >
-      <div class="song-list-wrapper">
-        <song-list :songs="songs"></song-list>
-      </div>
-    </Scroll>
+    <div class="bg-layer" ref="layer"></div>
+    <div class="list" ref="list">
+      <Scroll
+        :data="songs"
+        :probe-type="probeType"
+        :listen-scroll="listenScroll"
+        @scroll="scroll"
+        class="sub-list"
+      >
+        <div class="song-list-wrapper">
+          <song-list :songs="songs" @select="selectItem"></song-list>
+        </div>
+        <div v-show="!songs.length" class="loading-container">
+          <loading></loading>
+        </div>
+      </Scroll>
+    </div>
   </div>
 </template>
 
 <script>
 import Scroll from "base/scroll/scroll";
 import SongList from "base/song-list/song-list";
+import Loading from "base/loading/loading";
 import { prefixStyle } from "common/js/util/dom";
-
-const RESERVED_HEIGHT = 42 + 51;
+import { mapActions } from "vuex";
+const RESERVED_HEIGHT = 42;
 const transform = prefixStyle("transform");
 const backdrop = prefixStyle("backdrop-filter");
 export default {
@@ -58,7 +66,7 @@ export default {
   },
   mounted() {
     this.imageHeight = this.$refs.bgImage.clientHeight;
-    this.minTranslateY = -this.imageHeight + RESERVED_HEIGHT;
+    this.minTranslateY = -this.imageHeight + RESERVED_HEIGHT + 51;
   },
   methods: {
     back() {
@@ -66,32 +74,54 @@ export default {
     },
     scroll(pos) {
       this.scrollY = pos.y;
-    }
+    },
+    selectItem(item, index) {
+      this.selectPlay({
+        list: this.songs,
+        song: item,
+        index
+      });
+    },
+    ...mapActions(["selectPlay"])
   },
   watch: {
     scrollY(newY) {
       let translateY = Math.max(this.minTranslateY, newY);
       let scale = 1;
-      let zIndex = 10;
+      let zIndex = 0;
       let blur = 0;
       let percent = Math.abs(newY / this.imageHeight);
       if (newY > 0) {
         scale = 1 + percent;
-        zIndex = 10;
+        this.$refs.list.style[transform] = `translate3d(0,${translateY}px,0)`;
+        this.$refs.headerBg.style.background = `rgba(247, 127, 86, 0)`;
       } else {
         blur = Math.min(20, percent * 20);
+        this.$refs.list.style["box-shadow"] = "none";
+        this.$refs.headerBg.style.background = `rgba(247, 127, 86, ${percent})`;
       }
 
-      this.$refs.layer.style[transform] = `translate3d(0,${translateY}px,0)`;
-      this.$refs.filter.style[backdrop] = `blur(${blur}px)`;
+      this.$refs.layer.style[transform] = `translate3d(0,${translateY -
+        51}px,0)`;
+
+      if (newY < this.minTranslateY) {
+        zIndex = 10;
+        this.$refs.bgImage.style.paddingTop = 0;
+        this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`;
+      } else {
+        this.$refs.bgImage.style.paddingTop = "75%";
+        this.$refs.bgImage.style.height = 0;
+      }
 
       this.$refs.bgImage.style[transform] = `scale(${scale})`;
       this.$refs.bgImage.style.zIndex = zIndex;
+      this.$refs.filter.style[backdrop] = `blur(${blur}px)`;
     }
   },
   components: {
     Scroll,
-    SongList
+    SongList,
+    Loading
   }
 };
 </script>
@@ -106,33 +136,49 @@ export default {
   bottom: 0;
   background-color: $bg-color;
   z-index: 20;
-  .back {
+  .header-bg {
     position: absolute;
     top: 0;
-    left: 6px;
-    z-index: 50;
-    .icon-back {
-      display: block;
-      padding: 10px;
-      font-size: 22px;
-      color: $login-btn;
+    left: 0;
+    width: 100%;
+    height: 42px;
+    z-index: 15;
+    .back {
+      position: absolute;
+      top: 0;
+      left: 6px;
+      z-index: 50;
+      .icon-back {
+        display: block;
+        padding: 10px;
+        font-size: 22px;
+        color: $white;
+      }
+    }
+    .title {
+      position: absolute;
+      top: 0;
+      left: 10%;
+      z-index: 40;
+      width: 80%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      text-align: center;
+      line-height: 42px;
+      font-size: 18px;
+      color: $white;
     }
   }
-  .title {
-    position: absolute;
-    top: 0;
-    left: 10%;
-    z-index: 40;
-    width: 80%;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    text-align: center;
-    line-height: 42px;
-    font-size: 18px;
-    color: $white;
-  }
 
+  .bg-layer {
+    position: relative;
+    height: 100%;
+    background-color: $white;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.2);
+  }
   .bg-image {
     position: relative;
     width: 100%;
@@ -160,6 +206,9 @@ export default {
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
     box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.2);
+    .sub-list {
+      height: 100%;
+    }
     .song-list-wrapper {
       padding: 20px 30px;
     }

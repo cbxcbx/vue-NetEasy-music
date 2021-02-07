@@ -4,6 +4,7 @@
     <keep-alive>
       <router-view />
     </keep-alive>
+    <Player></Player>
     <Nav></Nav>
   </div>
 </template>
@@ -11,10 +12,13 @@
 <script>
 import Mheader from "@/header/header";
 import Nav from "@/nav/nav";
+import Player from "@/player/player"
+
 export default {
   components: {
     Mheader,
-    Nav
+    Nav,
+    Player
   }
 };
 </script>

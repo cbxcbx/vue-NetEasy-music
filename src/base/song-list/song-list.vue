@@ -1,7 +1,7 @@
 <template>
   <div class="song-list">
     <ul>
-      <li class="song" v-for="(song, index) in songs" :key="index">
+      <li class="song" v-for="(song, index) in songs" :key="index" @click="selectSong(song,index)">
         <p class="count">{{ index + 1 }}</p>
         <div class="content">
           <p class="name">{{ song.name }}</p>
@@ -27,6 +27,9 @@ export default {
       } else {
         return `${song.singer}`;
       }
+    },
+    selectSong(item, index) {
+      this.$emit("select", item, index);
     }
   }
 };
@@ -64,11 +67,17 @@ export default {
         font-weight: bold;
         color: $black;
         width: 80%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .desc {
         width: 80%;
         font-size: $font-size-small;
         color: $gray;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }
