@@ -10,8 +10,18 @@
           <div class="back">
             <i class="iconfont icon-back" @click="back"></i>
           </div>
+          <h1 class="title">{{ currentSong.name }}</h1>
+          <h2 class="sub-title">{{ currentSong.singer }}</h2>
         </div>
-        <div class="middle"></div>
+        <div class="middle">
+          <div class="middle-l">
+            <div class="cd-wrapper">
+              <div class="cd">
+                <img :src="currentSong.image" class="image"/>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="bottom"></div>
       </div>
     </transition>
@@ -75,6 +85,8 @@ export default {
     }
   }
   .top {
+    position: relative;
+    margin-bottom: 25px;
     .back {
       position: absolute;
       top: 0;
@@ -82,8 +94,63 @@ export default {
       .icon-back {
         display: block;
         padding: 10px 5px;
-        font-size: 22px;
+        font-size: $font-size-large-x;
         color: $white;
+      }
+    }
+    .title {
+      width: 70%;
+      margin: 0 auto;
+      font-size: $font-size-large;
+      color: $white;
+      line-height: 42px;
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .sub-title {
+      font-size: $font-size-small;
+      font-weight: 400;
+      color: $white;
+      text-align: center;
+      line-height: 16px;
+    }
+  }
+  .middle {
+    position: fixed;
+    width: 100%;
+    top: 83px;
+    bottom: 170px;
+    white-space: nowrap;
+    font-size: 0;
+    .middle-l {
+      display: inline-block;
+      vertical-align: top;
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-top: 80%;
+      .cd-wrapper {
+        position: absolute;
+        left: 10%;
+        top: 0;
+        width: 80%;
+        box-sizing: border-box;
+        height: 100%;
+        .cd {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          .image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            border-radius: 50%;
+          }
+        }
       }
     }
   }
