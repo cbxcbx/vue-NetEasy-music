@@ -8,15 +8,26 @@
       </div>
     </div>
     <div class="login-register-btn-wrapper">
-      <button class="normal-btn bg-orange" @click="setStatus('register')">Sign up</button>
-      <button class="normal-btn bg-white" @click="setStatus('login')">Sign in</button>
+      <button class="normal-btn bg-orange" @click="setStatus('register')">
+        Sign up
+      </button>
+      <button class="normal-btn bg-white" @click="setStatus('login')">
+        Sign in
+      </button>
+      <div class="go-home">
+        <router-link to="/home">暂不登录 >></router-link>
+      </div>
     </div>
     <transition name="popup">
       <keep-alive>
         <component :is="currentComponent"></component>
       </keep-alive>
     </transition>
-    <div class="modal" @click.self="resetStatus" v-show="currentComponent !==''"></div>
+    <div
+      class="modal"
+      @click.self="resetStatus"
+      v-show="currentComponent !== ''"
+    ></div>
   </div>
 </template>
 
@@ -90,6 +101,17 @@ export default {
     width: 85vw;
     transform: translateX(-50%);
     z-index: 1;
+  }
+
+  .go-home {
+    margin: 10px 10px 0 0;
+    text-align: right;
+
+    a {
+      font-size: $font-size-small;
+      color: $white;
+      text-decoration: none;
+    }
   }
 
   .modal {
