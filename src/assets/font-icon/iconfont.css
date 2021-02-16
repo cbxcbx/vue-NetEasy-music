@@ -15,32 +15,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-iconfontphone17:before {
-  content: "\e615";
-}
-
 .icon-key:before {
   content: "\e604";
 }
 
-.icon-phone:before {
-  content: "\e601";
-}
-
-.icon-phone1:before {
-  content: "\e605";
-}
-
-.icon-hotelphone:before {
-  content: "\e60a";
-}
-
 .icon-username:before {
   content: "\e631";
-}
-
-.icon-PhoneContact-Red:before {
-  content: "\e6ee";
 }
 
 .icon-mima:before {

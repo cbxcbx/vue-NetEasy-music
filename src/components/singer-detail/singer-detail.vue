@@ -8,7 +8,7 @@
 import MusicList from "@/music-list/music-list";
 import { getSingerDetail } from "api/singer";
 import { ERR_OK } from "api/config";
-import { createSong } from "common/js/format/song";
+import { createSong, processSongsUrl } from "common/js/format/song";
 import { mapGetters } from "vuex";
 export default {
   data() {
@@ -28,7 +28,7 @@ export default {
         .then(res => {
           if (res.data.code === ERR_OK) {
             // console.log(res.data.hotSongs);
-            this.songList = this._normalizeSong(res.data.hotSongs);
+            this.songList = processSongsUrl(this._normalizeSong(res.data.hotSongs))
           }
         })
         .catch(error => {
