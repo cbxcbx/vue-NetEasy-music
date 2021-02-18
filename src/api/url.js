@@ -36,5 +36,8 @@ export default {
   GET_SONG_URL: '/song/url',
 
   // 获取歌曲详情
-  GET_SONG_DETIAL: '/song/detail'
+  GET_SONG_DETIAL: '/song/detail',
+
+  // 获取歌曲歌词
+  GET_SONG_LYRIC: '/lyric'
 }

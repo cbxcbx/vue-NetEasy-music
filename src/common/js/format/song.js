@@ -1,4 +1,4 @@
-import { getSongUrl, getSongDetail } from 'api/song';
+import { getSongUrl, getSongDetail, getLyric } from 'api/song';
 import { ERR_OK } from "api/config";
 
 export class Song {
@@ -11,6 +11,23 @@ export class Song {
     this.image = image;
     this.url = url;
     this.aliaName = aliaName;
+  }
+
+  getLyric() {
+    if (this.lyric) {
+      return Promise.resolve(this.lyric);
+    }
+
+    return new Promise((resolve, reject) => {
+      getLyric(this.id).then(res => {
+        if (res.data.code === ERR_OK) {
+          this.lyric = res.data.lrc.lyric;
+          resolve(this.lyric);
+        } else {
+          reject(new Error('no lyric'))
+        }
+      })
+    })
   }
 }
 

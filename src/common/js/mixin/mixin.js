@@ -1,6 +1,30 @@
 import { mapGetters, mapMutations } from 'vuex'
 import { playMode } from "common/js/player/config";
-// import { shuffle } from "common/js/utils";
+import { shuffle } from "common/js/util/shuffle";
+
+export const playlistMixin = {
+  computed: {
+    ...mapGetters([
+      'playlist'
+    ])
+  },
+  mounted () {
+    this.handlePlaylist(this.playlist)
+  },
+  activated () {
+    this.handlePlaylist(this.playlist)
+  },
+  watch: {
+    playlist (newVal) {
+      this.handlePlaylist(newVal)
+    }
+  },
+  methods: {
+    handlePlaylist () {
+      throw new Error('component must implement handlePlaylist method')
+    }
+  }
+}
 
 export const playerMixin = {
   computed: {
@@ -21,14 +45,20 @@ export const playerMixin = {
     changeMode() {
       let index = (this.mode + 1) % 3;
       this.setMode(index);
-      // let list = null;
-      // if (this.mode === playMode.random) {
-      //   list = shuffle(this.sequenceList);
-      // } else {
-      //   list = this.sequenceList;
-      // }
-      // this.resetCurrentIndex(list);
-      // this.setPlayList(list);
+      let list = null;
+      if (this.mode === playMode.random) {
+        list = shuffle(this.sequenceList);
+      } else {
+        list = this.sequenceList;
+      }
+      this.resetCurrentIndex(list);
+      this.setPlayList(list);
+    },
+    resetCurrentIndex(list) {
+      let index = list.findIndex((item) => {
+        return item.id === this.currentSong.id
+      })
+      this.setCurrentIndex(index)
     },
     ...mapMutations({
       setPlayingState: "SET_PLAYING_STATE",

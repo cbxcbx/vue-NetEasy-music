@@ -25,8 +25,8 @@ const mutations = {
     state.playlist = list;
   },
 
-  [type.SET_SEQUENCELIST](state, list) {
-    state.sequencelist = list;
+  [type.SET_SEQUENCE_LIST](state, list) {
+    state.sequenceList = list;
   },
 
   [type.SET_CURRENT_INDEX](state, index) {
