@@ -6,5 +6,6 @@ export const navIconUrl = {
   直播: "/home/recommend4",
   数字专辑: "/home/recommend5",
   唱聊: "/home/recommend6",
-  游戏专区: "/home/recommend7"
+  歌房: "/home/recommend7",
+  游戏专区: "/home/recommend8"
 }

@@ -7,6 +7,8 @@ const state = {
   playing: false,
   // 全屏
   fullScreen: false,
+  // sidebar模式
+  showSidebar: false,
   // 播放模式
   mode: playMode.sequence,
   // 顺序播放列表

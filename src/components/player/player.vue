@@ -89,23 +89,33 @@
       </div>
     </transition>
     <transition name="mini">
-      <div class="mini-player" v-show="!fullScreen" @click="open">
-        <div class="icon">
-          <div class="imgWrapper" ref="miniWrapper">
-            <img :src="currentSong.image" width="40" height="40" :class="cdCls" ref="miniImage" />
+      <div v-show="!fullScreen" @click="open" :class="{ sidebar: showSidebar }">
+        <div class="mini-player" ref="miniPlayer">
+          <div class="icon">
+            <div class="imgWrapper" ref="miniWrapper">
+              <img :src="currentSong.image" width="40" height="40" :class="cdCls" ref="miniImage" />
+            </div>
+          </div>
+          <div class="text">
+            <h2 class="name">{{ currentSong.name }}</h2>
+            <p class="desc">{{ currentSong.singer }}</p>
+          </div>
+          <div class="control">
+            <ProgressCircle :radius="radius" :percent="percent">
+              <i class="iconfont" :class="playIcon" @click.stop="togglePlaying"></i>
+            </ProgressCircle>
+          </div>
+          <div class="control">
+            <i class="iconfont icon-bofangliebiao"></i>
+          </div>
+          <div class="control sidebar">
+            <i class="iconfont icon-cebianlan" @click.stop="closeMini"></i>
           </div>
         </div>
-        <div class="text">
-          <h2 class="name">{{ currentSong.name }}</h2>
-          <p class="desc">{{ currentSong.singer }}</p>
-        </div>
-        <div class="control">
-          <ProgressCircle :radius="radius" :percent="percent">
-            <i class="iconfont" :class="playIcon" @click.stop="togglePlaying"></i>
-          </ProgressCircle>
-        </div>
-        <div class="control">
-          <i class="iconfont icon-bofangliebiao"></i>
+        <div class="sidebar-player" @click.stop="openMini">
+          <div class="imgWrapper">
+            <img :src="currentSong.image" width="30" height="30" :class="cdCls"/>
+          </div>
         </div>
       </div>
     </transition>
@@ -141,17 +151,27 @@ export default {
   },
   data() {
     return {
+      // 歌曲是否可以播放
       songReady: false,
+      // 歌词是否可以播放
       canLyricPlay: false,
+      // 当前歌曲进度
       currentTime: 0,
+      // 歌词对象
       currentLyric: null,
       currentLineNum: 0,
       playingLyric: "",
+      // 是否为纯音乐
       isPureMusic: false,
+      // 纯音乐显示的内容
       pureMusicLyric: "",
+      // 显示的是图片还是歌词
       currentShow: "cd",
+      // 歌曲url
       url: "",
+      // 歌曲时长
       duration: 0,
+      /// mini播放器圆形进度条宽度
       radius: 30
     };
   },
@@ -476,10 +496,17 @@ export default {
       imageWrapper.style[transform] =
         wTransform === "none" ? iTransform : iTransform.concat(" ", wTransform);
     },
+    closeMini() {
+      this.setSidebar(true);
+    },
+    openMini() {
+      this.setSidebar(false);
+    },
     ...mapMutations({
       setPlayingState: "SET_PLAYING_STATE",
       setCurrentIndex: "SET_CURRENT_INDEX",
-      setFullScreen: "SET_FULL_SCREEN"
+      setFullScreen: "SET_FULL_SCREEN",
+      setSidebar: "SET_SHOW_SIDEBAR"
     })
   },
   computed: {
@@ -500,6 +527,7 @@ export default {
       "playing",
       "playlist",
       "fullScreen",
+      "showSidebar",
       "currentSong",
       "currentIndex"
     ])
@@ -815,6 +843,7 @@ export default {
   height: 60px;
   background: $white;
   box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.2);
+  transition: all 1s;
   .icon {
     flex: 0 0 40px;
     width: 40px;
@@ -872,8 +901,52 @@ export default {
       font-size: 26px;
       color: $light-orange;
     }
+
+    &.sidebar {
+      flex: 0 0 20px;
+      width: 20px;
+      .icon-cebianlan {
+        color: $light-orange;
+      }
+    }
+  }
+
+  .sidebar & {
+    transform: translateX(150%);
+    // display: none;
   }
 }
+
+.sidebar-player {
+  position: fixed;
+  right: 0px;
+  top: 2px;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(100%);
+  transition: all 1s;
+  .imgWrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    background-color: $light-orange;
+    img {
+      margin-top: 5px;
+      border-radius: 50%;
+    }
+    .play {
+      animation: rotate 20s linear infinite;
+    }
+  }
+  .sidebar & {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+}
+
 @keyframes rotate {
   0% {
     transform: rotate(0);

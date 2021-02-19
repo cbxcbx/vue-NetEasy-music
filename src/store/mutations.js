@@ -17,6 +17,10 @@ const mutations = {
     state.fullScreen = fullScreen;
   },
 
+  [type.SET_SHOW_SIDEBAR](state, showSidebar) {
+    state.showSidebar = showSidebar;
+  },
+
   [type.SET_MODE](state, mode) {
     state.mode = mode;
   },

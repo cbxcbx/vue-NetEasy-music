@@ -6,6 +6,8 @@ export const SET_PLAYING_STATE = 'SET_PLAYING_STATE';
 
 export const SET_FULL_SCREEN = 'SET_FULL_SCREEN';
 
+export const SET_SHOW_SIDEBAR = 'SET_SHOW_SIDEBAR';
+
 export const SET_MODE = 'SET_MODE';
 
 export const SET_PLAYLIST = 'SET_PLAYLIST';
