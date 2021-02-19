@@ -1,12 +1,19 @@
 <template>
   <div class="song-list">
     <ul>
-      <li class="song" v-for="(song, index) in songs" :key="index" @click="selectSong(song,index)">
-        <p class="count">{{ index + 1 }}</p>
+      <li
+        class="song"
+        v-for="(song, index) in songs"
+        :key="index"
+        @click="selectSong(song, index)"
+      >
+        <!-- <p class="count">{{ index + 1 }}</p> -->
+        <img class="image" v-lazy="song.image" width="45" height="45" />
         <div class="content">
           <p class="name">{{ song.name }}</p>
           <p class="desc">{{ getDesc(song) }}</p>
         </div>
+        <div class="duration">{{ format(song.duration) }}</div>
       </li>
     </ul>
   </div>
@@ -30,6 +37,20 @@ export default {
     },
     selectSong(item, index) {
       this.$emit("select", item, index);
+    },
+    _pad(num, n = 2) {
+      let len = num.toString().length;
+      while (len < n) {
+        num = "0" + num;
+        len++;
+      }
+      return num;
+    },
+    format(interval) {
+      interval = interval | 0;
+      const minute = (interval / 60) | 0;
+      const second = this._pad(interval % 60);
+      return `${minute}:${second}`;
     }
   }
 };
@@ -43,7 +64,7 @@ export default {
     display: flex;
     align-items: center;
     height: 60px;
-    // border-bottom: 1px solid rgb(228, 228, 228);
+    padding-bottom: 10px;
 
     .count {
       margin-right: 20px;
@@ -57,6 +78,12 @@ export default {
       background-color: $singer-detail-song-list-bg;
       border-radius: 25%;
     }
+
+    .image {
+      margin-right: 20px;
+      border-radius: 25%;
+    }
+
     .content {
       flex: 1;
       line-height: 20px;
@@ -79,6 +106,11 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
       }
+    }
+
+    .duration{
+      font-size: 12px;
+      font-weight: bold;
     }
   }
 }

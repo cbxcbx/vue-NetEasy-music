@@ -1,4 +1,4 @@
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { playMode } from "common/js/player/config";
 import { shuffle } from "common/js/util/shuffle";
 
@@ -8,19 +8,19 @@ export const playlistMixin = {
       'playlist'
     ])
   },
-  mounted () {
+  mounted() {
     this.handlePlaylist(this.playlist)
   },
-  activated () {
+  activated() {
     this.handlePlaylist(this.playlist)
   },
   watch: {
-    playlist (newVal) {
+    playlist(newVal) {
       this.handlePlaylist(newVal)
     }
   },
   methods: {
-    handlePlaylist () {
+    handlePlaylist() {
       throw new Error('component must implement handlePlaylist method')
     }
   }
@@ -37,9 +37,15 @@ export const playerMixin = {
           : "icon-suijibofang";
     },
     ...mapGetters([
+      "playlist",
       "mode",
-      "sequenceList"
-    ])
+      "currentSong",
+      "sequenceList",
+      "favoriteList"
+    ]),
+    favoriteIcon() {
+      return this.getFavoriteIcon(this.currentSong)
+    }
   },
   methods: {
     changeMode() {
@@ -60,11 +66,37 @@ export const playerMixin = {
       })
       this.setCurrentIndex(index)
     },
+    toggleFavorite(song) {
+      if (this.isFavorite(song)) {
+        this.deleteFavoriteList(song);
+      } else {
+        this.saveFavoriteList(song);
+      }
+    },
+    getFavoriteIcon(song) {
+      if (Object.keys(song).length === 0) {
+        return
+      }
+      if (this.isFavorite(song)) {
+        return 'icon-aixin1'
+      }
+      return 'icon-aixin'
+    },
+    isFavorite(song) {
+      const index = this.favoriteList.findIndex((item) => {
+        return item.id === song.id
+      })
+      return index > -1
+    },
     ...mapMutations({
       setPlayingState: "SET_PLAYING_STATE",
       setCurrentIndex: "SET_CURRENTINDEX",
       setMode: "SET_MODE",
       setPlayList: "SET_PLAYLIST"
-    })
+    }),
+    ...mapActions([
+      'saveFavoriteList',
+      'deleteFavoriteList'
+    ])
   }
 }

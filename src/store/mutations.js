@@ -35,6 +35,10 @@ const mutations = {
 
   [type.SET_CURRENT_INDEX](state, index) {
     state.currentIndex = index;
+  },
+
+  [type.SET_FAVORITE_LIST](state, list) {
+    state.favoriteList = list;
   }
 }
 

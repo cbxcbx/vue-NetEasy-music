@@ -1,5 +1,5 @@
-import { playMode } from 'common/js/player/config'
-
+import { playMode } from 'common/js/player/config';
+import { loadFavorite } from 'common/js/util/cache'
 const state = {
   isLogin: false,
   singer: {},
@@ -16,7 +16,9 @@ const state = {
   // 其他排序列表
   sequenceList: [],
   // 当前播放索引
-  currentIndex: -1
+  currentIndex: -1,
+  // 我喜爱的歌曲
+  favoriteList: loadFavorite()
 }
 
 export default state

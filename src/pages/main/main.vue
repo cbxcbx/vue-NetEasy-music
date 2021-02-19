@@ -4,8 +4,8 @@
     <keep-alive>
       <router-view />
     </keep-alive>
-    <Player ref="player"></Player>
-    <Nav ref="nav"></Nav>
+    <Player></Player>
+    <Nav></Nav>
   </div>
 </template>
 

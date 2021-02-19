@@ -2,7 +2,7 @@ import { getSongUrl, getSongDetail, getLyric } from 'api/song';
 import { ERR_OK } from "api/config";
 
 export class Song {
-  constructor({ id, mid, singer, name, album, duration, image, url, aliaName }) {
+  constructor({ id, singer, name, album, duration, image, url, aliaName }) {
     this.id = id;
     this.singer = singer;
     this.name = name;
@@ -21,7 +21,11 @@ export class Song {
     return new Promise((resolve, reject) => {
       getLyric(this.id).then(res => {
         if (res.data.code === ERR_OK) {
-          this.lyric = res.data.lrc.lyric;
+          if (res.data.lrc) {
+            this.lyric = res.data.lrc.lyric;
+          } else {
+            this.lyric = '此歌曲为没有填词的纯音乐，请您欣赏';
+          }
           resolve(this.lyric);
         } else {
           reject(new Error('no lyric'))

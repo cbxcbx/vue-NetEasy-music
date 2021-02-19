@@ -28,33 +28,44 @@
           <div class="middle-l" ref="middleL">
             <div class="cd-wrapper" ref="cdWrapper">
               <div class="cd" ref="imageWrapper">
-                <img :src="currentSong.image" class="image" :class="cdCls" ref="image" />
+                <img
+                  :src="currentSong.image"
+                  class="image"
+                  :class="cdCls"
+                  ref="image"
+                />
               </div>
             </div>
             <div class="playing-lyric-wrapper">
-              <div class="playing-lyric">{{playingLyric}}</div>
+              <div class="playing-lyric">{{ playingLyric }}</div>
             </div>
           </div>
-          <Scroll class="middle-r" ref="lyricList" :data="currentLyric && currentLyric.lines">
+          <Scroll
+            class="middle-r"
+            ref="lyricList"
+            :data="currentLyric && currentLyric.lines"
+          >
             <div class="lyric-wrapper">
               <div v-if="currentLyric">
                 <p
                   ref="lyricLine"
                   class="text"
-                  :class="{'current': currentLineNum ===index}"
-                  v-for="(line,index) in currentLyric.lines"
+                  :class="{ current: currentLineNum === index }"
+                  v-for="(line, index) in currentLyric.lines"
                   :key="index"
-                >{{line.txt}}</p>
+                >
+                  {{ line.txt }}
+                </p>
               </div>
               <div class="pure-music" v-show="isPureMusic">
-                <p>{{pureMusicLyric}}</p>
+                <p>{{ pureMusicLyric }}</p>
               </div>
             </div>
           </Scroll>
         </div>
         <div class="bottom">
           <div class="progress-wrapper">
-            <span class="time time-l">{{format(currentTime)}}</span>
+            <span class="time time-l">{{ format(currentTime) }}</span>
             <div class="progress-bar-wrapper">
               <ProgressBar
                 :percent="percent"
@@ -63,14 +74,21 @@
                 ref="progressBar"
               ></ProgressBar>
             </div>
-            <span class="time time-r">{{format(this.duration)}}</span>
+            <span class="time time-r">{{ format(this.duration) }}</span>
           </div>
           <div class="operators">
             <div class="icon left">
-              <i class="iconfont icon-xunhuan1" @click="changeMode" :class="modeIcon"></i>
+              <i
+                class="iconfont icon-xunhuan1"
+                @click="changeMode"
+                :class="modeIcon"
+              ></i>
             </div>
             <div class="icon left" :class="disableCls">
-              <i class="iconfont icon-caret-right prev indent" @click="prev"></i>
+              <i
+                class="iconfont icon-caret-right prev indent"
+                @click="prev"
+              ></i>
               <i class="iconfont icon-caret-right prev" @click="prev"></i>
             </div>
             <div class="icon center" :class="disableCls">
@@ -82,7 +100,7 @@
               <i class="iconfont icon-caret-right" @click="next"></i>
             </div>
             <div class="icon right">
-              <i class="iconfont icon-aixin"></i>
+              <i class="iconfont" @click.stop="toggleFavorite(currentSong)" :class="favoriteIcon"></i>
             </div>
           </div>
         </div>
@@ -93,7 +111,13 @@
         <div class="mini-player" ref="miniPlayer">
           <div class="icon">
             <div class="imgWrapper" ref="miniWrapper">
-              <img :src="currentSong.image" width="40" height="40" :class="cdCls" ref="miniImage" />
+              <img
+                :src="currentSong.image"
+                width="40"
+                height="40"
+                :class="cdCls"
+                ref="miniImage"
+              />
             </div>
           </div>
           <div class="text">
@@ -102,7 +126,11 @@
           </div>
           <div class="control">
             <ProgressCircle :radius="radius" :percent="percent">
-              <i class="iconfont" :class="playIcon" @click.stop="togglePlaying"></i>
+              <i
+                class="iconfont"
+                :class="playIcon"
+                @click.stop="togglePlaying"
+              ></i>
             </ProgressCircle>
           </div>
           <div class="control">
@@ -114,7 +142,12 @@
         </div>
         <div class="sidebar-player" @click.stop="openMini">
           <div class="imgWrapper">
-            <img :src="currentSong.image" width="30" height="30" :class="cdCls"/>
+            <img
+              :src="currentSong.image"
+              width="30"
+              height="30"
+              :class="cdCls"
+            />
           </div>
         </div>
       </div>
@@ -133,7 +166,8 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import { prefixStyle } from "common/js/util/dom";
-import { playerMixin } from "common/js/mixin/mixin";
+import { playerMixin } from "common/js/mixin/mixin"
+import { playMode } from "common/js/player/config";
 import animations from "create-keyframe-animation";
 import Lyric from "lyric-parser";
 import Scroll from "base/scroll/scroll";
@@ -264,6 +298,11 @@ export default {
     },
     end() {
       this.currentTime = 0;
+      if (this.mode === playMode.loop) {
+        this.loop();
+      } else {
+        this.next();
+      }
     },
     paused() {
       this.setPlayingState(false);
@@ -525,10 +564,8 @@ export default {
     },
     ...mapGetters([
       "playing",
-      "playlist",
       "fullScreen",
       "showSidebar",
-      "currentSong",
       "currentIndex"
     ])
   },
@@ -703,7 +740,7 @@ export default {
         }
       }
       .playing-lyric-wrapper {
-        width: 60%;
+        width: 66%;
         margin: 30px auto 0 auto;
         overflow: hidden;
         text-align: center;
@@ -733,6 +770,12 @@ export default {
           &.current {
             color: $white;
           }
+        }
+        .pure-music {
+          padding-top: 50%;
+          line-height: 32px;
+          color: hsla(0, 0%, 100%, 0.5);
+          font-size: $font-size-medium;
         }
       }
     }
