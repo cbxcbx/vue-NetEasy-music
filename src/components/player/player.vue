@@ -28,23 +28,14 @@
           <div class="middle-l" ref="middleL">
             <div class="cd-wrapper" ref="cdWrapper">
               <div class="cd" ref="imageWrapper">
-                <img
-                  :src="currentSong.image"
-                  class="image"
-                  :class="cdCls"
-                  ref="image"
-                />
+                <img :src="currentSong.image" class="image" :class="cdCls" ref="image" />
               </div>
             </div>
             <div class="playing-lyric-wrapper">
               <div class="playing-lyric">{{ playingLyric }}</div>
             </div>
           </div>
-          <Scroll
-            class="middle-r"
-            ref="lyricList"
-            :data="currentLyric && currentLyric.lines"
-          >
+          <Scroll class="middle-r" ref="lyricList" :data="currentLyric && currentLyric.lines">
             <div class="lyric-wrapper">
               <div v-if="currentLyric">
                 <p
@@ -53,9 +44,7 @@
                   :class="{ current: currentLineNum === index }"
                   v-for="(line, index) in currentLyric.lines"
                   :key="index"
-                >
-                  {{ line.txt }}
-                </p>
+                >{{ line.txt }}</p>
               </div>
               <div class="pure-music" v-show="isPureMusic">
                 <p>{{ pureMusicLyric }}</p>
@@ -78,17 +67,10 @@
           </div>
           <div class="operators">
             <div class="icon left">
-              <i
-                class="iconfont icon-xunhuan1"
-                @click="changeMode"
-                :class="modeIcon"
-              ></i>
+              <i class="iconfont icon-xunhuan1" @click="changeMode" :class="modeIcon"></i>
             </div>
             <div class="icon left" :class="disableCls">
-              <i
-                class="iconfont icon-caret-right prev indent"
-                @click="prev"
-              ></i>
+              <i class="iconfont icon-caret-right prev indent" @click="prev"></i>
               <i class="iconfont icon-caret-right prev" @click="prev"></i>
             </div>
             <div class="icon center" :class="disableCls">
@@ -111,13 +93,7 @@
         <div class="mini-player" ref="miniPlayer">
           <div class="icon">
             <div class="imgWrapper" ref="miniWrapper">
-              <img
-                :src="currentSong.image"
-                width="40"
-                height="40"
-                :class="cdCls"
-                ref="miniImage"
-              />
+              <img :src="currentSong.image" width="40" height="40" :class="cdCls" ref="miniImage" />
             </div>
           </div>
           <div class="text">
@@ -126,15 +102,11 @@
           </div>
           <div class="control">
             <ProgressCircle :radius="radius" :percent="percent">
-              <i
-                class="iconfont"
-                :class="playIcon"
-                @click.stop="togglePlaying"
-              ></i>
+              <i class="iconfont" :class="playIcon" @click.stop="togglePlaying"></i>
             </ProgressCircle>
           </div>
           <div class="control">
-            <i class="iconfont icon-bofangliebiao"></i>
+            <i class="iconfont icon-bofangliebiao" @click.stop="showPlayList"></i>
           </div>
           <div class="control sidebar">
             <i class="iconfont icon-cebianlan" @click.stop="closeMini"></i>
@@ -142,16 +114,12 @@
         </div>
         <div class="sidebar-player" @click.stop="openMini">
           <div class="imgWrapper">
-            <img
-              :src="currentSong.image"
-              width="30"
-              height="30"
-              :class="cdCls"
-            />
+            <img :src="currentSong.image" width="30" height="30" :class="cdCls" />
           </div>
         </div>
       </div>
     </transition>
+    <playlist ref="playlist"></playlist>
     <audio
       ref="audio"
       @playing="ready"
@@ -166,13 +134,14 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import { prefixStyle } from "common/js/util/dom";
-import { playerMixin } from "common/js/mixin/mixin"
+import { playerMixin } from "common/js/mixin/mixin";
 import { playMode } from "common/js/player/config";
 import animations from "create-keyframe-animation";
 import Lyric from "lyric-parser";
 import Scroll from "base/scroll/scroll";
 import ProgressBar from "base/progress-bar/progress-bar";
 import ProgressCircle from "base/progress-circle/progress-circle";
+import Playlist from "@/play-list/play-list";
 
 const transform = prefixStyle("transform");
 const transitionDuration = prefixStyle("transitionDuration");
@@ -535,6 +504,9 @@ export default {
       imageWrapper.style[transform] =
         wTransform === "none" ? iTransform : iTransform.concat(" ", wTransform);
     },
+    showPlayList() {
+      this.$refs.playlist.show();
+    },
     closeMini() {
       this.setSidebar(true);
     },
@@ -562,12 +534,7 @@ export default {
     percent() {
       return this.currentTime / this.currentSong.duration;
     },
-    ...mapGetters([
-      "playing",
-      "fullScreen",
-      "showSidebar",
-      "currentIndex"
-    ])
+    ...mapGetters(["playing", "fullScreen", "showSidebar", "currentIndex"])
   },
   watch: {
     currentSong(newSong, oldSong) {
@@ -590,7 +557,7 @@ export default {
       this.duration = this.currentSong.duration;
       // 若歌曲 5s 未播放，则认为超时，修改状态确保可以切换歌曲。
       clearTimeout(this.timer);
-      this.timer = setTimeout(() => {
+      this.timer = setTimeout(function() {
         this.songReady = true;
       }, 5000);
       this.getLyric();
@@ -600,7 +567,7 @@ export default {
       this.$refs.audio.play();
       // 若歌曲 5s 未播放，则认为超时，修改状态确保可以切换歌曲。
       clearTimeout(this.timer);
-      this.timer = setTimeout(() => {
+      this.timer = setTimeout(function() {
         this.songReady = true;
       }, 5000);
     },
@@ -609,7 +576,7 @@ export default {
         return;
       }
       const audio = this.$refs.audio;
-      this.$nextTick(() => {
+      this.$nextTick(function() {
         newStatus ? audio.play() : audio.pause();
       });
       if (!newStatus) {
@@ -632,7 +599,8 @@ export default {
   components: {
     Scroll,
     ProgressBar,
-    ProgressCircle
+    ProgressCircle,
+    Playlist
   }
 };
 </script>
