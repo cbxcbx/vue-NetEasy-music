@@ -90,7 +90,7 @@ export const playerMixin = {
     },
     ...mapMutations({
       setPlayingState: "SET_PLAYING_STATE",
-      setCurrentIndex: "SET_CURRENTINDEX",
+      setCurrentIndex: "SET_CURRENT_INDEX",
       setMode: "SET_MODE",
       setPlayList: "SET_PLAYLIST"
     }),

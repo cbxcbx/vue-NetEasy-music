@@ -63,7 +63,8 @@
         "always"
       ],
       "quotes": 0,
-      "prefer-const": "off"
+      "prefer-const": "off",
+      "indent": "off"
     }
   },
   "browserslist": [

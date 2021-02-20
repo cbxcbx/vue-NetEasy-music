@@ -29,7 +29,7 @@
               <span @click.stop="toggleFavorite(item)" class="like">
                 <i class="iconfont" :class="getFavoriteIcon(item)"></i>
               </span>
-              <span class="delete">
+              <span class="delete" @click.stop="deleteOne(item)">
                 <i class="iconfont icon-guanbi"></i>
               </span>
             </li>
@@ -98,8 +98,39 @@ export default {
         300
       );
     },
-    selectItem(song, index) {},
+    deleteOne(item) {
+      if (item.deleting) {
+        return;
+      }
+      item.deleting = true;
+      this.deleteSong(item);
+      if (!this.playlist.length) {
+        this.hide();
+      }
+      setTimeout(() => {
+        item.deleting = false;
+      }, 300);
+    },
+    selectItem(item, index) {
+      if (this.mode === playMode.random) {
+        index = this.playlist.findIndex(song => {
+          return song.id === item.id;
+        });
+      }
+      this.setCurrentIndex(index);
+      this.setPlayingState(true);
+    },
     ...mapActions(["deleteSong", "deleteSongList"])
+  },
+  watch: {
+    currentSong(newSong, oldSong) {
+      if (!this.showFlag || newSong.id === oldSong.id) {
+        return;
+      }
+      setTimeout(() => {
+        this.scrollToCurrent(newSong);
+      }, 20);
+    }
   },
   computed: {
     modeText() {
