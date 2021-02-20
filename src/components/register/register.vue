@@ -266,7 +266,7 @@ export default {
 
       .sent-captcha {
         font-size: 14px;
-        color: $light-orange;
+        color: $color-orange-l;
       }
       .resentTime {
         font-size: 14px;

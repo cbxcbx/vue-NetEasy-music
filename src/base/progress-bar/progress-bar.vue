@@ -102,7 +102,7 @@ export default {
     .progress {
       position: absolute;
       height: 100%;
-      background-color: $light-orange;
+      background-color: $color-orange-l;
     }
     .progress-btn-wrapper {
       position: absolute;
@@ -117,9 +117,9 @@ export default {
         box-sizing: border-box;
         width: 16px;
         height: 16px;
-        border: 3px solid $white;
+        border: 3px solid $color-white;
         border-radius: 50%;
-        background: $light-orange;
+        background: $color-orange-l;
       }
     }
   }

@@ -177,7 +177,7 @@ export default {
       background-color: $color-text-l;
       &.active {
         border-radius: 5px;
-        background-color: $color-highlight-background;
+        background-color: $color-orange-s;
       }
     }
   }

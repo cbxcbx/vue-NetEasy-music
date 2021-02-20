@@ -56,13 +56,13 @@ export default {
     transform-origin: center;
     &.progress-background {
       transform: scale(0.9);
-      stroke: $orange;
+      stroke: $color-orange;
       opacity: .5;
     }
 
     &.progress-bar {
       transform: scale(0.9) rotate(-90deg);
-      stroke: $login-btn;
+      stroke: $color-orange-m;
     }
   }
 }

@@ -118,21 +118,21 @@ export default {
   right: 0;
   bottom: 80px;
   z-index: 2;
-  background-color: $bg-color;
+  background-color: $color-bg-7;
   .recommend-content {
     height: 100%;
     overflow: hidden;
     h2 {
       margin: 20px auto;
       width: 90%;
-      color: $black;
+      color: $color-black;
     }
     .recommend-header {
       .icon-back {
         display: inline-block;
         padding: 10px;
         font-size: 22px;
-        color: $orange;
+        color: $color-orange;
       }
     }
     .recommend-newest-album {
@@ -162,7 +162,7 @@ export default {
           width: 90%;
           margin-top: 10px;
           font-size: $font-size-medium;
-          color: $gray;
+          color: $color-gray;
         }
       }
     }
@@ -191,7 +191,7 @@ export default {
           }
           .singer {
             font-size: 14px;
-            color: $gray;
+            color: $color-gray;
           }
         }
       }

@@ -23,18 +23,18 @@ export default {};
       top: 50%;
       left: 20px;
       transform: translateY(-50%);
-      color: $gray;
+      color: $color-gray;
     }
     .search-input {
       padding: 20px 20px 20px 45px;
       width: 100%;
-      color: $gray;
-      background-color: $search-input-bg;
+      color: $color-gray;
+      background-color: $color-bg-2;
       outline: none;
       border: none;
       border-radius: 20px;
       &::-webkit-input-placeholder {
-        color: $gray;
+        color: $color-gray;
       }
     }
   }

@@ -4,7 +4,7 @@ html,
 body {
   font-family: PingFang SC,STHeitiSC-Light,Helvetica-Light,arial,sans-serif,Droid Sans Fallback;
   font-weight: normal;
-  background-color: $bg-color;
+  background-color: $color-bg-7;
 }
 
 .normal-btn {
@@ -19,13 +19,13 @@ body {
 
   &.bg-orange {
     margin-bottom: 15px;
-    color: $white;
-    background-color: $login-btn;
+    color: $color-white;
+    background-color: $color-orange-m;
   }
 
   &.bg-white {
-    color: $login-btn;
-    background-color: $white;
+    color: $color-orange-m;
+    background-color: $color-white;
   }
 }
 
@@ -38,15 +38,15 @@ body {
       display: flex;
       flex-wrap: nowrap;
       padding: 8px 0 10px;
-      border-bottom: 2px solid $light-orange;
+      border-bottom: 2px solid $color-orange-l;
       align-items: center;
 
       &.error {
-        color: $error-message;
-        border-bottom-color: $error-message;
+        color: $color-red;
+        border-bottom-color: $color-red;
 
         input {
-          color: $error-message;
+          color: $color-red;
         }
       }
     }
@@ -55,11 +55,11 @@ body {
       margin-top: 10px;
       font-size: 16px;
       line-height: 1.5;
-      color: $error-message;
+      color: $color-red;
     }
 
     label {
-      color: $gray;
+      color: $color-gray;
     }
 
     .iconfont {
@@ -88,7 +88,7 @@ body {
   top: 200px;
   z-index: 3;
   padding: 40px 25px 0;
-  background-color: $white;
+  background-color: $color-white;
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
 }

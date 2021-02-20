@@ -63,7 +63,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  background-color: $bg-color;
+  background-color: $color-bg-7;
 
   .welcome-top {
     flex: 0 0 110px;
@@ -94,7 +94,7 @@ export default {
         margin-bottom: 10px;
         font-size: 30px;
         font-weight: 100;
-        color: $black;
+        color: $color-black;
       }
 
       .text {
@@ -130,7 +130,7 @@ export default {
         &.active {
           width: 20px;
           border-radius: 5px;
-          background-color: $light-orange;
+          background-color: $color-orange-l;
         }
       }
     }

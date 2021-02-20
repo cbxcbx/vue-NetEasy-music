@@ -128,13 +128,15 @@ export default {
 
 <style lang="scss" scoped>
 @import "common/style/variable.scss";
+@import "common/style/mixins.scss";
+
 .music-list {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: $bg-color;
+  background-color: $color-bg-7;
   z-index: 20;
   .header-bg {
     position: absolute;
@@ -152,7 +154,7 @@ export default {
         display: block;
         padding: 10px;
         font-size: 22px;
-        color: $white;
+        color: $color-white;
       }
     }
     .title {
@@ -161,21 +163,19 @@ export default {
       left: 10%;
       z-index: 40;
       width: 80%;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
+      @include no-wrap();
       text-align: center;
       line-height: 42px;
       font-size: 18px;
       font-weight: normal;
-      color: $white;
+      color: $color-white;
     }
   }
 
   .bg-layer {
     position: relative;
     height: 100%;
-    background-color: $white;
+    background-color: $color-white;
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
     box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.2);
@@ -203,7 +203,7 @@ export default {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: $white;
+    background-color: $color-white;
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
     box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.2);

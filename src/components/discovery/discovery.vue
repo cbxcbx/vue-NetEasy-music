@@ -151,7 +151,7 @@ export default {
     .tab {
       display: inline-block;
       white-space: nowrap;
-      border-bottom: 1px solid $tab-border;
+      border-bottom: 1px solid $color-bg-3;
       .tab-item {
         display: inline-block;
         padding: 10px;
@@ -159,13 +159,13 @@ export default {
         text-align: center;
 
         img {
-          background-color: $orange;
+          background-color: $color-orange;
           border-radius: 50%;
         }
         .nav-icon {
           margin-top: 5px;
           font-size: 12px;
-          color: $tab-font-gray;
+          color: $color-light-black;
         }
       }
     }
@@ -175,7 +175,7 @@ export default {
         line-height: 65px;
         text-align: center;
         font-size: $font-size-medium;
-        color: $orange;
+        color: $color-orange;
       }
       .list-item {
         position: relative;

@@ -150,6 +150,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "common/style/variable.scss";
+@import "common/style/mixins.scss";
 
 .player-list {
   position: fixed;
@@ -181,7 +182,7 @@ export default {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: $white;
+    background-color: $color-white;
     .list-header {
       position: relative;
       padding: 20px 30px 10px 20px;
@@ -191,18 +192,18 @@ export default {
         .mode {
           margin-right: 10px;
           font-size: 30px;
-          color: $tab-font-gray;
+          color: $color-light-black;
         }
         .text {
           flex: 1;
           line-height: 1;
           font-size: $font-size-medium;
-          color: $tab-font-gray;
+          color: $color-light-black;
         }
         .clear {
           .iconfont {
             font-size: $font-size-large;
-            color: $gray;
+            color: $color-gray;
           }
         }
       }
@@ -231,24 +232,22 @@ export default {
         }
         .text {
           flex: 1;
-          text-overflow: ellipsis;
-          overflow: hidden;
-          white-space: nowrap;
+          @include no-wrap();
           font-size: $font-size-medium;
-          color: $black;
+          color: $color-black;
         }
         .like {
           position: relative;
           margin-right: 15px;
           .iconfont {
             font-weight: bold;
-            color: $light-orange;
+            color: $color-orange-l;
           }
         }
         .delete {
           .iconfont {
             font-weight: bold;
-            color: $light-orange;
+            color: $color-orange-l;
           }
         }
       }
@@ -262,17 +261,17 @@ export default {
       display: flex;
       align-items: center;
       padding: 8px 16px;
-      border: 1px solid $light-orange;
+      border: 1px solid $color-orange-l;
       border-radius: 100px;
 
       .icon-jia {
         margin-right: 5px;
         font-size: $font-size-small-s;
-        color: $light-orange;
+        color: $color-orange-l;
       }
       .text {
         font-size: $font-size-small;
-        color: $light-orange;
+        color: $color-orange-l;
       }
     }
   }
@@ -280,8 +279,8 @@ export default {
   .list-close {
     text-align: center;
     line-height: 50px;
-    background: $player-list-close-bg;
-    color: $gray;
+    background: $color-bg-1;
+    color: $color-gray;
     font-size: $font-size-medium-x;
   }
 }

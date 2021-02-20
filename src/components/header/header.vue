@@ -27,14 +27,14 @@ export default {};
       padding: 11px;
       font-size: 22px;
       font-weight: bold;
-      color: $orange;
+      color: $color-orange;
     }
   }
   .title {
     width: 100%;
     line-height: 44px;
     font-size: 16px;
-    color: $orange;
+    color: $color-orange;
     font-weight: bold;
     text-align: center;
     letter-spacing: 3px;

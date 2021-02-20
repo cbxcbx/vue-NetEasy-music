@@ -53,7 +53,7 @@ export default {
     display: flex;
     padding: 0 10px 0 40px;
     height: 100%;
-    background-color: $light-orange;
+    background-color: $color-orange-l;
     border-radius: 25px 25px 0 0;
 
     .search-container {
@@ -65,7 +65,7 @@ export default {
         position: absolute;
         top: 23px;
         left: 5px;
-        color: $white;
+        color: $color-white;
         font-size: 20px;
       }
 
@@ -77,9 +77,9 @@ export default {
         outline: none;
         border-radius: 15px;
         background-color: #f29a67;
-        color: $white;
+        color: $color-white;
         &::placeholder {
-          color: $white;
+          color: $color-white;
         }
       }
     }
@@ -92,7 +92,7 @@ export default {
       .nav-item {
         flex: 1;
         padding-top: 23px;
-        color: $white;
+        color: $color-white;
         text-align: center;
       }
 

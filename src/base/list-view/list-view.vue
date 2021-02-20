@@ -186,7 +186,7 @@ export default {
   position: relative;
   height: 100%;
   overflow: hidden;
-  background-color: $singer-list-bg;
+  background-color: $color-bg-4;
   .list-group {
     .list-group-title {
       margin-bottom: 10px;
@@ -195,21 +195,21 @@ export default {
       line-height: 25px;
       font-size: $font-size-small;
       color: $color-text-l;
-      background: $light-orange;
+      background: $color-orange-l;
     }
     .list-group-item {
       display: flex;
       align-items: center;
       margin: 0 5px;
       padding: 5px 0;
-      border-bottom: 1px solid $list-item-border-bottom;
+      border-bottom: 1px solid $color-bg-5;
       .avatar {
         border-radius: 5px;
       }
 
       .singer-name {
         margin-left: 20px;
-        color: $black;
+        color: $color-black;
         font-size: $font-size-medium;
       }
       &:last-child {
@@ -227,14 +227,14 @@ export default {
     width: 20px;
     border-radius: 10px;
     text-align: center;
-    background-color: $light-orange;
+    background-color: $color-orange-l;
     .item {
       padding: 3px;
       line-height: 1;
       font-size: $font-size-small;
       color: $color-text-l;
       &.current {
-        color: $singer-shortcut-current;
+        color: $color-red-s;
       }
     }
   }
@@ -249,7 +249,7 @@ export default {
       line-height: 25px;
       font-size: $font-size-small;
       color: $color-text-l;
-      background: $light-orange;
+      background: $color-orange-l;
     }
   }
 }

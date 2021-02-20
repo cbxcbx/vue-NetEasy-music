@@ -27,7 +27,7 @@ export default {
   .desc {
     line-height: 20px;
     font-size: 12px;
-    color: $orange;
+    color: $color-orange;
   }
   img {
     margin-top: 10px;

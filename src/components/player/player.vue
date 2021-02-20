@@ -607,6 +607,8 @@ export default {
 
 <style lang="scss" scoped>
 @import "common/style/variable.scss";
+@import "common/style/mixins.scss";
+
 .normal-player {
   position: fixed;
   left: 0;
@@ -614,7 +616,7 @@ export default {
   right: 0;
   bottom: 0;
   z-index: 100;
-  background-color: $bg-color;
+  background-color: $color-bg-7;
   .background {
     position: absolute;
     left: -50%;
@@ -647,23 +649,22 @@ export default {
         display: block;
         padding: 10px 5px;
         font-size: $font-size-large-x;
-        color: $white;
+        color: $color-white;
       }
     }
     .title {
       width: 70%;
       margin: 0 auto;
       font-size: $font-size-large;
-      color: $white;
+      color: $color-white;
       line-height: 42px;
       text-align: center;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      @include no-wrap();
     }
     .sub-title {
       font-size: $font-size-small;
       font-weight: 400;
-      color: $white;
+      color: $color-white;
       text-align: center;
       line-height: 16px;
     }
@@ -736,7 +737,7 @@ export default {
           color: hsla(0, 0%, 100%, 0.5);
           font-size: $font-size-medium;
           &.current {
-            color: $white;
+            color: $color-white;
           }
         }
         .pure-music {
@@ -762,7 +763,7 @@ export default {
         flex: 0 0 30px;
         width: 30px;
         line-height: 30px;
-        color: $white;
+        color: $color-white;
         font-size: $font-size-small;
         &.time-l {
           text-align: left;
@@ -782,7 +783,7 @@ export default {
         .iconfont {
           font-size: 20px;
           font-weight: bold;
-          color: $light-orange;
+          color: $color-orange-l;
         }
         .prev {
           display: inline-block;
@@ -801,7 +802,7 @@ export default {
           width: 40px;
           height: 40px;
           margin: -21px 0 0 -20px;
-          background-color: $light-orange;
+          background-color: $color-orange-l;
           border-radius: 50%;
           opacity: 0.3;
         }
@@ -852,7 +853,7 @@ export default {
   z-index: 100;
   width: 100%;
   height: 60px;
-  background: $white;
+  background: $color-white;
   box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.2);
   transition: all 1s;
   .icon {
@@ -880,19 +881,15 @@ export default {
     line-height: 20px;
     overflow: hidden;
     .name {
-      color: $black;
+      color: $color-black;
       font-size: $font-size-medium;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      @include no-wrap();
       margin-bottom: 2px;
     }
     .desc {
-      color: $gray;
+      color: $color-gray;
       font-size: $font-size-small;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      @include no-wrap();
     }
   }
   .control {
@@ -906,18 +903,18 @@ export default {
       top: 6px;
       left: 6px;
       font-size: $font-size-large;
-      color: $light-orange;
+      color: $color-orange-l;
     }
     .icon-bofangliebiao {
       font-size: 26px;
-      color: $light-orange;
+      color: $color-orange-l;
     }
 
     &.sidebar {
       flex: 0 0 20px;
       width: 20px;
       .icon-cebianlan {
-        color: $light-orange;
+        color: $color-orange-l;
       }
     }
   }
@@ -942,7 +939,7 @@ export default {
     height: 40px;
     border-radius: 50%;
     text-align: center;
-    background-color: $light-orange;
+    background-color: $color-orange-l;
     img {
       margin-top: 5px;
       border-radius: 50%;

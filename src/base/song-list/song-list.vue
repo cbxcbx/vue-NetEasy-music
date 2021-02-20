@@ -58,6 +58,8 @@ export default {
 
 <style lang="scss" scoped>
 @import "common/style/variable.scss";
+@import "common/style/mixins.scss";
+
 .song-list {
   .song {
     position: relative;
@@ -73,9 +75,9 @@ export default {
       line-height: 45px;
       font-size: $font-size-medium-x;
       font-weight: bold;
-      color: $orange;
+      color: $color-orange;
       text-align: center;
-      background-color: $singer-detail-song-list-bg;
+      background-color: $color-bg-6;
       border-radius: 25%;
     }
 
@@ -92,19 +94,15 @@ export default {
         margin-top: 4px;
         font-size: $font-size-medium;
         font-weight: bold;
-        color: $black;
+        color: $color-black;
         width: 80%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        @include no-wrap();
       }
       .desc {
         width: 80%;
         font-size: $font-size-small;
-        color: $gray;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        color: $color-gray;
+        @include no-wrap();
       }
     }
 

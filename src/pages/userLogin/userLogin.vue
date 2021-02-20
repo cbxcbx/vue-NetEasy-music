@@ -84,7 +84,7 @@ export default {
       margin-top: 30px;
     }
     p {
-      color: $white;
+      color: $color-white;
       font-size: 28px;
       font-weight: bold;
       &:last-child {
@@ -109,7 +109,7 @@ export default {
 
     a {
       font-size: $font-size-small;
-      color: $white;
+      color: $color-white;
       text-decoration: none;
     }
   }

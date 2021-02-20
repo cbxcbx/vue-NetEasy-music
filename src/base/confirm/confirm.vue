@@ -74,13 +74,13 @@ export default {
     .confirm-content {
       width: 270px;
       border-radius: 13px;
-      background: $white;
+      background: $color-white;
       .text {
         padding: 19px 15px;
         line-height: 22px;
         text-align: center;
         font-size: 18px;
-        color: $gray;
+        color: $color-gray;
       }
       .operate {
         display: flex;
@@ -93,7 +93,7 @@ export default {
         line-height: 22px;
         padding: 10px 0;
         border-top: 1px solid rgba(0, 0, 0, 0.3);
-        color: $gray;
+        color: $color-gray;
         &.left {
           border-right: 1px solid rgba(0, 0, 0, 0.3);
         }
