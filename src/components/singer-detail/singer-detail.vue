@@ -27,8 +27,9 @@ export default {
       getSingerDetail(this.singer.id)
         .then(res => {
           if (res.data.code === ERR_OK) {
-            // console.log(res.data.hotSongs);
-            this.songList = processSongsUrl(this._normalizeSong(res.data.hotSongs))
+             processSongsUrl(this._normalizeSong(res.data.hotSongs)).then(songs => {
+               this.songList = songs;
+             })
           }
         })
         .catch(error => {

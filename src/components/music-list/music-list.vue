@@ -167,6 +167,7 @@ export default {
       text-align: center;
       line-height: 42px;
       font-size: 18px;
+      font-weight: normal;
       color: $white;
     }
   }

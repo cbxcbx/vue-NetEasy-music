@@ -65,9 +65,11 @@ export function processSongsUrl(songs) {
     ids.push(song.id);
   })
 
-  addSongUrl(ids, songs);
-  addSongDuration(ids, songs);
-  return songs
+  return new Promise((resolve, reject) => {
+    addSongUrl(ids, songs).then(songs => {
+      resolve(addSongDuration(ids, songs))
+    });
+  })
 }
 
 function addSongUrl(ids, songs) {
@@ -87,7 +89,7 @@ function addSongUrl(ids, songs) {
     songs = songs.filter((song) => {
       const purl = purlMap[song.id];
       if (purl) {
-        song.url = purl
+        song.url = purl;
         return true
       }
       return false
