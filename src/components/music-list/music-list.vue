@@ -21,7 +21,7 @@
         class="sub-list"
       >
         <div class="song-list-wrapper">
-          <song-list :songs="songs" @select="selectItem"></song-list>
+          <song-list :songs="songs" @select="selectItem" :list-type="showType"></song-list>
         </div>
         <div v-show="!songs.length" class="loading-container">
           <loading></loading>
@@ -49,6 +49,10 @@ export default {
     bgImage: {
       type: String,
       default: ""
+    },
+    showType: {
+      type: Number,
+      default: 0
     },
     songs: {
       type: Array,

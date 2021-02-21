@@ -33,6 +33,10 @@ const mutations = {
     state.sequenceList = list;
   },
 
+  [type.SET_TOP_LIST](state, list) {
+    state.topList = list;
+  },
+
   [type.SET_CURRENT_INDEX](state, index) {
     state.currentIndex = index;
   },

@@ -15,6 +15,8 @@ const state = {
   playlist: [],
   // 其他排序列表
   sequenceList: [],
+  // 榜单或歌单信息
+  topList: {},
   // 当前播放索引
   currentIndex: -1,
   // 我喜爱的歌曲

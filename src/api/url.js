@@ -39,5 +39,11 @@ export default {
   GET_SONG_DETIAL: '/song/detail',
 
   // 获取歌曲歌词
-  GET_SONG_LYRIC: '/lyric'
+  GET_SONG_LYRIC: '/lyric',
+
+  // 获取所有榜单
+  GET_RANK_LIST: '/toplist',
+
+  // 获取歌单(榜单)详情
+  GET_PLAY_LIST_DETAIL: '/playlist/detail'
 }

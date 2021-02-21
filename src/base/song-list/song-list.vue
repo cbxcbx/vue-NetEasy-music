@@ -1,19 +1,14 @@
 <template>
   <div class="song-list">
     <ul>
-      <li
-        class="song"
-        v-for="(song, index) in songs"
-        :key="index"
-        @click="selectSong(song, index)"
-      >
-        <!-- <p class="count">{{ index + 1 }}</p> -->
-        <img class="image" v-lazy="song.image" width="45" height="45" />
+      <li class="song" v-for="(song, index) in songs" :key="index" @click="selectSong(song, index)">
+        <p class="count" v-if="listType === 0">{{ index + 1 }}</p>
+        <img class="image" v-lazy="song.image" width="45" height="45" v-if="listType === 1" />
         <div class="content">
           <p class="name">{{ song.name }}</p>
           <p class="desc">{{ getDesc(song) }}</p>
         </div>
-        <div class="duration">{{ format(song.duration) }}</div>
+        <div class="duration" v-if="listType === 1">{{ format(song.duration) }}</div>
       </li>
     </ul>
   </div>
@@ -22,6 +17,16 @@
 <script>
 export default {
   props: {
+    /*
+     *  listType
+     *  0: 普通list只显示数字
+     *  1: 不显示数字， 只显示图片和歌曲时长
+     *  2:
+     */
+    listType: {
+      type: Number,
+      default: 0
+    },
     songs: {
       type: Array,
       default: () => []
@@ -106,7 +111,7 @@ export default {
       }
     }
 
-    .duration{
+    .duration {
       font-size: 12px;
       font-weight: bold;
     }

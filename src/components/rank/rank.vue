@@ -1,24 +1,26 @@
 <template>
   <div class="rank">
-    <Scroll :data="topList" class="toplist" ref="toplist">
+    <Scroll :data="rankList" class="toplist" ref="toplist">
       <ul>
-        <li v-for="(list, index) in topList" :key="index" class="item">
+        <li v-for="(list, index) in rankList" :key="index" class="item">
           <div class="icon">
             <img v-lazy="list.image" width="100" height="100" />
           </div>
-          <ul class="song-list">
+          <ul class="song-list" @click="selectList(list)">
             <li v-for="(item, index) in list.tracks" :key="index" class="song">
-              <span>{{ index + 1 }}</span>
+              <span>{{ index + 1 }}.</span>
               <span>{{ item.name }}</span>
             </li>
           </ul>
         </li>
       </ul>
     </Scroll>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
 import { getRankList, getPlayListDetail } from "api/rank";
 import { ERR_OK } from "api/config";
 import Scroll from "base/scroll/scroll";
@@ -26,17 +28,24 @@ import Scroll from "base/scroll/scroll";
 export default {
   data() {
     return {
-      topList: [],
+      rankList: [],
       track: []
     };
   },
   methods: {
+    findIndex(list, id) {
+      let index = list.findIndex(item => {
+        return item.id === id;
+      });
+      return index;
+    },
     _getTopList() {
       getRankList().then(res => {
         if (res.data.code === ERR_OK) {
           let list = [];
           res.data.list.forEach(item => {
             list.push({
+              name: item.name,
               id: item.id,
               image: item.coverImgUrl,
               tracks: []
@@ -47,25 +56,31 @@ export default {
               if (res.data.code === ERR_OK) {
                 let index = this.findIndex(list, item.id);
                 list[index].tracks = res.data.playlist.tracks.slice(0, 3);
-                this.topList = list;
+                this.rankList = list;
               }
             });
           });
         }
       });
     },
-    findIndex(list, id) {
-      let index = list.findIndex(item => {
-        return item.id === id;
+    selectList(list) {
+      this.$router.push({
+        path: `/rank/${list.id}`
       });
-      return index;
-    }
+      this.setTopList(list);
+    },
+    ...mapMutations({
+      setTopList: "SET_TOP_LIST"
+    })
   },
-  created() {
-    this._getTopList();
+  computed: {
+    ...mapGetters(["topList"])
   },
   components: {
     Scroll
+  },
+  created() {
+    this._getTopList();
   }
 };
 </script>
@@ -81,6 +96,7 @@ export default {
   right: 0;
   bottom: 80px;
   width: 100%;
+  z-index: 15;
   .toplist {
     height: 100%;
     overflow: hidden;
@@ -113,6 +129,9 @@ export default {
         overflow: hidden;
         color: $color-black;
         font-size: $font-size-small-s;
+        // background-color: #dde4ef;
+        background-color: #f1e5e3;
+        // background-color: #fe9e6836;
         .song {
           @include no-wrap();
           line-height: 30px;

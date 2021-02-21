@@ -14,6 +14,8 @@ export const playlist = state => state.playlist;
 
 export const sequenceList = state => state.sequenceList;
 
+export const topList = state => state.topList;
+
 export const currentIndex = state => state.currentIndex;
 
 export const favoriteList = state => state.favoriteList;

@@ -14,6 +14,8 @@ export const SET_PLAYLIST = 'SET_PLAYLIST';
 
 export const SET_SEQUENCE_LIST = 'SET_SEQUENCE_LIST';
 
+export const SET_TOP_LIST = 'SET_TOP_LIST';
+
 export const SET_CURRENT_INDEX = 'SET_CURRENT_INDEX';
 
 export const SET_FAVORITE_LIST = 'SET_FAVORITE_LIST';

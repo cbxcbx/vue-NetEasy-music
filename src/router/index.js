@@ -7,6 +7,7 @@ import Welcome from '@/welcome/welcome'
 import Recommend from '@/recommend/recommend'
 import Singer from '@/singer/singer'
 import Rank from '@/rank/rank'
+import RankDetail from "@/rank-detail/rank-detail";
 import SingerDetail from '@/singer-detail/singer-detail'
 import Test from '@/test'
 
@@ -54,8 +55,13 @@ const routes = [
       },
       {
         path: '/rank',
-        name: 'Rank',
-        component: Rank
+        component: Rank,
+        children: [
+          {
+            path: ':id',
+            component: RankDetail
+          }
+        ]
       }
     ]
   },

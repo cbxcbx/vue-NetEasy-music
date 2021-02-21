@@ -1,6 +1,6 @@
 <template>
   <transition appear name="fade">
-    <music-list :title="title" :bgImage="bgStyle" :songs="songList"></music-list>
+    <music-list :title="title" :bgImage="bgStyle" :songs="songList" :show-type="showType"></music-list>
   </transition>
 </template>
 
@@ -18,6 +18,7 @@ export default {
   },
   created() {
     this._getDetail();
+    this.showType = 1;
   },
   methods: {
     _getDetail() {
