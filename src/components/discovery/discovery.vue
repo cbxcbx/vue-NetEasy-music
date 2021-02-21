@@ -26,7 +26,7 @@
         <div class="personalized-list">
           <h1>推荐歌单</h1>
           <ul>
-            <li v-for="item in personalizedList" :key="item.id" class="list-item">
+            <li v-for="item in personalizedList" :key="item.id" class="list-item" @click="selectList(item)">
               <div class="image">
                 <div class="gradients"></div>
                 <img v-lazy="item.picUrl" />
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
 import Scroll from "base/scroll/scroll";
 import Slider from "base/slider/slider";
 import loading from "base/loading/loading";
@@ -107,12 +108,23 @@ export default {
     },
     navigate(path) {
       this.$router.push(path);
-    }
+    },
+    selectList(list) {
+      this.$router.push({
+        path: `/disc/${list.id}`
+      });
+      list.image = list.picUrl;
+      this.setTopList(list);
+    },
+    ...mapMutations({
+      setTopList: "SET_TOP_LIST"
+    })
   },
   computed: {
     discoveryList() {
       return this.personalizedList.concat(this.iconList);
-    }
+    },
+    ...mapGetters(["topList"])
   },
   components: {
     Scroll,

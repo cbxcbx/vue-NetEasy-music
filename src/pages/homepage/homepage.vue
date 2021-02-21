@@ -27,7 +27,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 80px;
-  z-index: 1;
+  z-index: 15;
   .tab {
     display: flex;
     margin: 0 5vw;

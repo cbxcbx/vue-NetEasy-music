@@ -7,7 +7,7 @@ import Welcome from '@/welcome/welcome'
 import Recommend from '@/recommend/recommend'
 import Singer from '@/singer/singer'
 import Rank from '@/rank/rank'
-import RankDetail from "@/rank-detail/rank-detail";
+import toplistDetail from "@/toplist-detail/toplist-detail";
 import SingerDetail from '@/singer-detail/singer-detail'
 import Test from '@/test'
 
@@ -40,6 +40,10 @@ const routes = [
             meta: {
               requireAuth: true
             }
+          },
+          {
+            path: '/disc/:id',
+            component: toplistDetail
           }
         ]
       },
@@ -59,7 +63,7 @@ const routes = [
         children: [
           {
             path: ':id',
-            component: RankDetail
+            component: toplistDetail
           }
         ]
       }

@@ -19,7 +19,11 @@ export default {
   methods: {
     _getListDetail() {
       if (!this.topList.id) {
-        this.$router.push("/rank");
+        if (this.$route.path.indexOf('disc') !== -1) {
+          this.$router.push("/home");
+        } else {
+          this.$router.push("/rank");
+        }
       }
       getPlayListDetail(this.topList.id).then(res => {
         if (res.data.code === ERR_OK) {

@@ -53,6 +53,10 @@
           </Scroll>
         </div>
         <div class="bottom">
+          <div class="dot-wrapper">
+            <span class="dot" :class="{'active':currentShow==='cd'}"></span>
+            <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
+          </div>
           <div class="progress-wrapper">
             <span class="time time-l">{{ format(currentTime) }}</span>
             <div class="progress-bar-wrapper">
@@ -753,6 +757,24 @@ export default {
     position: absolute;
     bottom: 50px;
     width: 100%;
+    .dot-wrapper {
+      text-align: center;
+      font-size: 0;
+      .dot {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 4px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: hsla(0, 0%, 100%, 0.5);
+        &.active {
+          width: 20px;
+          border-radius: 5px;
+          background-color: hsla(0, 0%, 100%, 0.8);
+        }
+      }
+    }
     .progress-wrapper {
       display: flex;
       align-items: center;

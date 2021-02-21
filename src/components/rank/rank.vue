@@ -14,6 +14,9 @@
           </ul>
         </li>
       </ul>
+      <div class="loading-container" v-show="!rankList.length">
+        <loading></loading>
+      </div>
     </Scroll>
     <router-view></router-view>
   </div>
@@ -24,6 +27,7 @@ import { mapGetters, mapMutations } from "vuex";
 import { getRankList, getPlayListDetail } from "api/rank";
 import { ERR_OK } from "api/config";
 import Scroll from "base/scroll/scroll";
+import Loading from "base/loading/loading";
 
 export default {
   data() {
@@ -77,7 +81,8 @@ export default {
     ...mapGetters(["topList"])
   },
   components: {
-    Scroll
+    Scroll,
+    Loading
   },
   created() {
     this._getTopList();
