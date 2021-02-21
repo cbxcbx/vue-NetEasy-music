@@ -7,6 +7,8 @@ const state = {
   playing: false,
   // 全屏
   fullScreen: false,
+  // 个人中心
+  showUserCenter: false,
   // sidebar模式
   showSidebar: false,
   // 播放模式

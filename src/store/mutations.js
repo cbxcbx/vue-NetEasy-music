@@ -13,6 +13,10 @@ const mutations = {
     state.playing = playing;
   },
 
+  [type.SET_SHOW_USER_CENTER](state, showUserCenter) {
+    state.showUserCenter = showUserCenter;
+  },
+
   [type.SET_FULL_SCREEN](state, fullScreen) {
     state.fullScreen = fullScreen;
   },

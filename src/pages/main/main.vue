@@ -1,6 +1,7 @@
 <template>
   <div class="main">
     <Mheader></Mheader>
+    <UserCenter></UserCenter>
     <keep-alive>
       <router-view />
     </keep-alive>
@@ -11,6 +12,7 @@
 
 <script>
 import Mheader from "@/header/header";
+import UserCenter from "@/user-center/user-center";
 import Nav from "@/nav/nav";
 import Player from "@/player/player";
 
@@ -19,6 +21,7 @@ export default {
   },
   components: {
     Mheader,
+    UserCenter,
     Nav,
     Player
   }

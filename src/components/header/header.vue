@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="icon">
-      <i class="iconfont icon-list"></i>
+      <i class="iconfont icon-list" @click="show"></i>
     </div>
     <div>
       <p class="title">MUSIC</p>
@@ -10,7 +10,20 @@
 </template>
 
 <script>
-export default {};
+import { mapGetters, mapMutations } from "vuex";
+export default {
+  methods: {
+    show() {
+      this.setShowUserCenter(true);
+    },
+    ...mapMutations({
+      setShowUserCenter: 'SET_SHOW_USER_CENTER'
+    })
+  },
+  computed: {
+    ...mapGetters(['showUserCenter'])
+  }
+};
 </script>
 
 <style lang="scss" scoped>

@@ -6,6 +6,8 @@ export const playing = state => state.playing;
 
 export const fullScreen = state => state.fullScreen;
 
+export const showUserCenter = state => state.showUserCenter;
+
 export const showSidebar = state => state.showSidebar;
 
 export const mode = state => state.mode;
