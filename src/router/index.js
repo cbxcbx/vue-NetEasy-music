@@ -9,7 +9,6 @@ import Singer from '@/singer/singer'
 import Rank from '@/rank/rank'
 import toplistDetail from "@/toplist-detail/toplist-detail";
 import SingerDetail from '@/singer-detail/singer-detail'
-import Test from '@/test'
 
 import { Message } from 'element-ui';
 import { getLoginToken } from 'common/js/util/getToken'
@@ -73,11 +72,6 @@ const routes = [
     path: '/welcome',
     name: 'Welcome',
     component: Welcome
-  },
-  {
-    path: '/test',
-    name: 'Test',
-    component: Test
   }
 ]
 

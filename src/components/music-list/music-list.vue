@@ -157,7 +157,7 @@ export default {
       .icon-back {
         display: block;
         padding: 10px;
-        font-size: 22px;
+        font-size: $font-size-large-x;
         color: $color-white;
       }
     }

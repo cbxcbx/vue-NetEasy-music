@@ -1,34 +1,28 @@
 <template>
-  <div class="user-login">
-    <div class="enjoy-your-music">
-      <img src="./enjoy-icon.png" class="enjoy-icon" />
-      <div class="text">
-        <p>Enjoy your music</p>
-        <p>with me</p>
+  <transition appear name="fade">
+    <div class="user-login">
+      <div class="enjoy-your-music">
+        <img src="./enjoy-icon.png" class="enjoy-icon" />
+        <div class="text">
+          <p>Enjoy your music</p>
+          <p>with me</p>
+        </div>
       </div>
-    </div>
-    <div class="login-register-btn-wrapper">
-      <button class="normal-btn bg-orange" @click="setStatus('register')">
-        Sign up
-      </button>
-      <button class="normal-btn bg-white" @click="setStatus('login')">
-        Sign in
-      </button>
-      <div class="go-home">
-        <router-link to="/home">暂不登录 >></router-link>
+      <div class="login-register-btn-wrapper">
+        <button class="normal-btn bg-orange" @click="setStatus('register')">Sign up</button>
+        <button class="normal-btn bg-white" @click="setStatus('login')">Sign in</button>
+        <div class="go-home">
+          <router-link to="/home">暂不登录 >></router-link>
+        </div>
       </div>
+      <transition name="popup">
+        <keep-alive>
+          <component :is="currentComponent"></component>
+        </keep-alive>
+      </transition>
+      <div class="modal" @click.self="resetStatus" v-show="currentComponent !== ''"></div>
     </div>
-    <transition name="popup">
-      <keep-alive>
-        <component :is="currentComponent"></component>
-      </keep-alive>
-    </transition>
-    <div
-      class="modal"
-      @click.self="resetStatus"
-      v-show="currentComponent !== ''"
-    ></div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -67,7 +61,7 @@ export default {
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: 11;
+  z-index: 16;
   background-image: url("./ocean2.jpg");
   background-size: cover;
   background-repeat: no-repeat;

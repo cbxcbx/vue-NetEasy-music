@@ -1,7 +1,9 @@
 import { playMode } from 'common/js/player/config';
 import { loadFavorite } from 'common/js/util/cache'
 const state = {
-  isLogin: false,
+  // 用户信息
+  user: {},
+  // 歌手信息
   singer: {},
   // 播放
   playing: false,

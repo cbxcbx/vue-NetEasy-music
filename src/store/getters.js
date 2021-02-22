@@ -1,4 +1,4 @@
-export const isLogin = state => state.isLogin;
+export const user = state => state.user;
 
 export const singer = state => state.singer;
 

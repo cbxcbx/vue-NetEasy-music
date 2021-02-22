@@ -11,6 +11,9 @@ export default {
   // 查看登录状态
   LOGIN_STATUS: '/login/status',
 
+  // 退出登录
+  LOGOUT: '/logout',
+
   // 获取Banner
   GET_BANNER: '/banner',
 

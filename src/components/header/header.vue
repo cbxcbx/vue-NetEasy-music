@@ -15,6 +15,7 @@ export default {
   methods: {
     show() {
       this.setShowUserCenter(true);
+      this.$emit('show');
     },
     ...mapMutations({
       setShowUserCenter: 'SET_SHOW_USER_CENTER'

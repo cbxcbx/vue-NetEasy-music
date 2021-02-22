@@ -1,7 +1,7 @@
 <template>
   <div class="main">
-    <Mheader></Mheader>
-    <UserCenter></UserCenter>
+    <Mheader @show="getUserDetail"></Mheader>
+    <UserCenter ref="userCenter"></UserCenter>
     <keep-alive>
       <router-view />
     </keep-alive>
@@ -17,7 +17,10 @@ import Nav from "@/nav/nav";
 import Player from "@/player/player";
 
 export default {
-  created() {
+  methods: {
+    getUserDetail() {
+      this.$refs.userCenter._getUserDetail();
+    }
   },
   components: {
     Mheader,

@@ -11,3 +11,8 @@ export function loginStatus() {
   let url = HOST + Url.LOGIN_STATUS;
   return axios.get(url)
 }
+
+export function logout() {
+  let url = HOST + Url.LOGOUT;
+  return axios.get(url)
+}

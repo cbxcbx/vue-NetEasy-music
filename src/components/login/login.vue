@@ -8,7 +8,7 @@
         <label>Phone</label>
         <div class="item-content" :class="{ error: phoneNumberError }">
           <i class="iconfont icon-phone2"></i>
-          <input type="text" placeholder="输入手机号码" v-model="phoneNumber" @native.enter="login"/>
+          <input type="text" placeholder="输入手机号码" v-model="phoneNumber" @native.enter="login" />
         </div>
         <div class="error-message" v-show="phoneNumberError">手机号码格式不正确</div>
       </div>
@@ -16,7 +16,7 @@
         <label>Password</label>
         <div class="item-content" :class="{ error: passwordError }">
           <i class="iconfont icon-key"></i>
-          <input type="password" placeholder="输入密码" v-model="password" @native.enter="login"/>
+          <input type="password" placeholder="输入密码" v-model="password" @native.enter="login" />
         </div>
         <div class="error-message" v-show="passwordError">密码为8-20位, 含有数字、字母、符号 至少两种且不能含有空格</div>
       </div>
@@ -67,7 +67,9 @@ export default {
               type: "success",
               message: "登录成功"
             });
-            this.$router.push('/home');
+            this.phoneNumber = "";
+            this.password = "";
+            this.$router.push("/home");
           } else {
             this.$message({
               type: "error",
