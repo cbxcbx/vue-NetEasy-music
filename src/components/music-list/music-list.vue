@@ -141,7 +141,7 @@ export default {
   right: 0;
   bottom: 0;
   background-color: $color-bg-7;
-  z-index: 20;
+  z-index: 99;
   .header-bg {
     position: absolute;
     top: 0;

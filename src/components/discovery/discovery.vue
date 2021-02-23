@@ -110,11 +110,11 @@ export default {
       this.$router.push(path);
     },
     selectList(list) {
+      list.image = list.picUrl;
+      this.setTopList(list);
       this.$router.push({
         path: `/disc/${list.id}`
       });
-      list.image = list.picUrl;
-      this.setTopList(list);
     },
     ...mapMutations({
       setTopList: "SET_TOP_LIST"

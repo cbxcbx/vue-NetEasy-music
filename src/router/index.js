@@ -65,6 +65,10 @@ const routes = [
             component: toplistDetail
           }
         ]
+      },
+      {
+        path: '/my-playlist/:id',
+        component: toplistDetail
       }
     ]
   },

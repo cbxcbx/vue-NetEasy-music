@@ -1,28 +1,54 @@
 <template>
   <transition appear name="user-fade">
-    <div class="user-center" v-show="showUserCenter" @click="hide">
-      <div class="user-wrapper" @click.stop>
-        <div class="back">
-          <i class="iconfont icon-back" @click="hide"></i>
-        </div>
-        <div class="bg-image" :style="bgImage"></div>
-        <div class="profile" v-if="user.userId">
-          <div class="profile-item profile-detail">
-            <img v-lazy="user.avatarUrl" width="70" height="70" class="image" />
-            <div class="nickname">{{ user.nickname }}</div>
-            <div class="signature">{{ user.signature }}</div>
+    <div class="user-center" v-show="showUserCenter">
+      <scroll :data="playList" class="list-view">
+        <div class="user-wrapper">
+          <div class="back">
+            <i class="iconfont icon-back" @click="hide"></i>
           </div>
-          <div class="profile-item btn" @click="logOut">
-            <span>退出登录</span>
+          <div class="bg-image" :style="bgImage"></div>
+          <div class="profile" v-if="user.userId">
+            <div class="profile-item profile-detail">
+              <img
+                v-lazy="user.avatarUrl"
+                width="70"
+                height="70"
+                class="image"
+              />
+              <div class="nickname">{{ user.nickname }}</div>
+              <div class="signature">{{ user.signature }}</div>
+            </div>
+            <div class="profile-item my-playlist">
+              <span class="title">{{ `我的歌单 ${playList.length}个` }}</span>
+              <ul>
+                <li
+                  v-for="(list, index) in playList"
+                  :key="index"
+                  class="item"
+                  @click="selectPlaylist(list)"
+                >
+                  <div class="image">
+                    <img v-lazy="list.coverImgUrl" width="40" height="40" />
+                  </div>
+                  <div class="text">
+                    <p class="name">{{ list.name }}</p>
+                    <p class="count">{{ list.trackCount }}首</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="profile-item btn" @click="logOut">
+              <span>退出登录</span>
+            </div>
+          </div>
+          <div class="profile-item btn" @click="goToLogin" v-if="!user.userId">
+            <span>去登录</span>
           </div>
         </div>
-        <div class="profile-item btn" @click="goToLogin" v-if="!user.userId">
-          <span>去登录</span>
+        <div class="loading-container" v-show="isLoading">
+          <loading></loading>
         </div>
-      </div>
-      <div class="loading-container" v-show="isLoading">
-        <loading></loading>
-      </div>
+      </scroll>
     </div>
   </transition>
 </template>
@@ -30,14 +56,17 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import { loginStatus, logout } from "api/user/login";
+import { getUserPlayList } from "api/user/user";
 import { ERR_OK } from "api/config";
 import { getLoginToken } from "common/js/util/getToken";
+import Scroll from "base/scroll/scroll";
 import Loading from "base/loading/loading";
 export default {
   data() {
     return {
       isLoading: false,
       isLogin: false,
+      playList: [],
       imgUrl: require("../../assets/images/default.png")
     };
   },
@@ -53,7 +82,18 @@ export default {
           .then(res => {
             if (res.data.data.code === ERR_OK) {
               this.setUser(res.data.data.profile);
-              this.isLoading = false;
+              getUserPlayList(this.user.userId).then(res => {
+                if (res.data.code === ERR_OK) {
+                  this.isLoading = false;
+                  this.playList = res.data.playlist;
+                }
+              }).catch(err => {
+                this.$message({
+                  type: "error",
+                  message: "加载歌单失败 请重试"
+                });
+                console.log(err);
+              })
             }
           })
           .catch(err => {
@@ -92,9 +132,18 @@ export default {
         path: "/user-login"
       });
     },
+    selectPlaylist(list) {
+      list.image = list.coverImgUrl;
+      this.setTopList(list);
+      console.log(list);
+      this.$router.push({
+        path: `/my-playlist/${list.id}`
+      });
+    },
     ...mapMutations({
       setUser: "SET_USER",
-      setShowUserCenter: "SET_SHOW_USER_CENTER"
+      setShowUserCenter: "SET_SHOW_USER_CENTER",
+      setTopList: "SET_TOP_LIST"
     })
   },
   computed: {
@@ -108,6 +157,7 @@ export default {
     ...mapGetters(["showUserCenter", "user"])
   },
   components: {
+    Scroll,
     Loading
   }
 };
@@ -123,7 +173,11 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 200;
+  height: 100%;
+  overflow: hidden;
+  background-color: #eee;
+  z-index: 98;
+
   &.user-fade-enter-active,
   &.user-fade-leave-active {
     transition: opacity 0.3s;
@@ -140,14 +194,11 @@ export default {
     }
   }
 
+  .list-view {
+    height: 100%;
+    overflow: hidden;
+  }
   .user-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: #eee;
     .back {
       position: absolute;
       top: 0;
@@ -180,6 +231,7 @@ export default {
       }
     }
     .profile {
+      padding-bottom: 20px;
       .profile-detail {
         position: relative;
         margin: -20px auto 0;
@@ -200,6 +252,38 @@ export default {
           font-size: $font-size-small;
           color: $color-gray;
           @include no-wrap();
+        }
+      }
+      .my-playlist {
+        padding: 20px;
+        .title {
+          display: block;
+          margin-bottom: 15px;
+          font-size: $font-size-small;
+          color: $color-gray;
+        }
+        .item {
+          display: flex;
+          align-items: center;
+          padding-bottom: 15px;
+          .image {
+            margin-right: 20px;
+            img {
+              border-radius: 10px;
+            }
+          }
+          .text {
+            flex: 1;
+            line-height: 20px;
+            .name {
+              font-size: $font-size-medium;
+              color: $color-black;
+            }
+            .count {
+              font-size: $font-size-small;
+              color: $color-gray;
+            }
+          }
         }
       }
     }

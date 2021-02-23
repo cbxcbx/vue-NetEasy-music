@@ -14,6 +14,9 @@ export default {
   // 退出登录
   LOGOUT: '/logout',
 
+  // 获取用户歌单
+  GET_USER_PLAYLIST: '/user/playlist',
+
   // 获取Banner
   GET_BANNER: '/banner',
 

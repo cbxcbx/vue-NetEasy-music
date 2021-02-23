@@ -21,14 +21,16 @@ export default {
       if (!this.topList.id) {
         if (this.$route.path.indexOf('disc') !== -1) {
           this.$router.push("/home");
-        } else {
+        } else if (this.$route.path.indexOf('rank') !== -1) {
           this.$router.push("/rank");
+        } else {
+          this.$router.push("/user-center");
         }
       }
       getPlayListDetail(this.topList.id).then(res => {
         if (res.data.code === ERR_OK) {
           processSongsUrl(
-            this._normalizeSong(res.data.playlist.tracks.slice(0, 50))
+            this._normalizeSong(res.data.playlist.tracks)
           ).then(songs => {
             this.songs = songs;
           });
@@ -51,6 +53,11 @@ export default {
       return `background-image: url(${this.topList.image})`;
     },
     ...mapGetters(["topList"])
+  },
+  watch: {
+    topList(newList) {
+      this._getListDetail();
+    }
   },
   components: {
     MusicList
