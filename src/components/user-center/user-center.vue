@@ -135,7 +135,6 @@ export default {
     selectPlaylist(list) {
       list.image = list.coverImgUrl;
       this.setTopList(list);
-      console.log(list);
       this.$router.push({
         path: `/my-playlist/${list.id}`
       });

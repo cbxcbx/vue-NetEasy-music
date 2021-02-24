@@ -1,17 +1,18 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Homepage from 'pages/homepage/homepage'
-import UserLogin from 'pages/userLogin/userLogin'
-import Main from 'pages/main/main'
-import Welcome from '@/welcome/welcome'
-import Recommend from '@/recommend/recommend'
-import Singer from '@/singer/singer'
-import Rank from '@/rank/rank'
-import toplistDetail from "@/toplist-detail/toplist-detail";
-import SingerDetail from '@/singer-detail/singer-detail'
-
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 import { Message } from 'element-ui';
-import { getLoginToken } from 'common/js/util/getToken'
+import { getLoginToken } from 'common/js/util/getToken';
+
+const Homepage = () => import('pages/homepage/homepage');
+const UserLogin = () => import('pages/userLogin/userLogin');
+const Main = () => import('pages/main/main');
+const Welcome = () => import('@/welcome/welcome');
+const Recommend = () => import('@/recommend/recommend');
+const Singer = () => import('@/singer/singer');
+const Rank = () => import('@/rank/rank');
+const toplistDetail = () => import("@/toplist-detail/toplist-detail");
+const SingerDetail = () => import('@/singer-detail/singer-detail');
+
 Vue.use(VueRouter)
 
 const routes = [

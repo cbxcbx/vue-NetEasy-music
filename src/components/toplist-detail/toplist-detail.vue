@@ -11,6 +11,7 @@ import { getPlayListDetail } from "api/rank";
 import { ERR_OK } from "api/config";
 import { createSong, processSongsUrl } from "common/js/format/song";
 export default {
+  name: "topListDeatil",
   data() {
     return {
       songs: []
@@ -24,7 +25,7 @@ export default {
         } else if (this.$route.path.indexOf('rank') !== -1) {
           this.$router.push("/rank");
         } else {
-          this.$router.push("/user-center");
+          this.$router.push("/home");
         }
       }
       getPlayListDetail(this.topList.id).then(res => {

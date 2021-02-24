@@ -211,6 +211,7 @@ export default {
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
     box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.2);
+    z-index: 9;
     .sub-list {
       height: 100%;
     }

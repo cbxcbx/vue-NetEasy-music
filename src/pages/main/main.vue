@@ -2,7 +2,7 @@
   <div class="main">
     <Mheader @show="getUserDetail"></Mheader>
     <UserCenter ref="userCenter"></UserCenter>
-    <keep-alive>
+    <keep-alive exclude="topListDeatil">
       <router-view />
     </keep-alive>
     <Player></Player>

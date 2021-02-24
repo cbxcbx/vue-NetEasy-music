@@ -3,7 +3,7 @@
     <div class="content">
       <Discovery></Discovery>
     </div>
-    <keep-alive>
+    <keep-alive exclude="topListDeatil">
       <router-view></router-view>
     </keep-alive>
   </div>
