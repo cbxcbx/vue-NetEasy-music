@@ -2,9 +2,9 @@
   <transition name="nav" appear>
     <div class="nav">
       <div class="nav-content">
-        <div class="search-container">
+        <div class="search-container" @click="gotoSeach">
           <span class="iconfont icon-chazhao"></span>
-          <input type="text" placeholder="Search" />
+          <span class="text">Search</span>
         </div>
         <div class="nav-list">
           <div class="nav-item">
@@ -24,6 +24,13 @@
 
 <script>
 export default {
+  methods: {
+    gotoSeach() {
+      this.$router.push({
+        path: "/search"
+      });
+    }
+  }
 };
 </script>
 
@@ -69,18 +76,16 @@ export default {
         font-size: 20px;
       }
 
-      input {
+      .text {
+        display: inline-block;
         width: 100%;
         height: 35px;
+        line-height: 35px;
+        font-size: $font-size-medium;
         padding-left: 35px;
-        border: none;
-        outline: none;
         border-radius: 15px;
         background-color: #f29a67;
         color: $color-white;
-        &::placeholder {
-          color: $color-white;
-        }
       }
     }
 

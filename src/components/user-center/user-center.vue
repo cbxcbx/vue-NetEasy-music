@@ -1,5 +1,5 @@
 <template>
-  <transition appear name="user-fade">
+  <transition appear name="fade">
     <div class="user-center" v-show="showUserCenter">
       <scroll :data="playList" class="list-view">
         <div class="user-wrapper">
@@ -9,12 +9,7 @@
           <div class="bg-image" :style="bgImage"></div>
           <div class="profile" v-if="user.userId">
             <div class="profile-item profile-detail">
-              <img
-                v-lazy="user.avatarUrl"
-                width="70"
-                height="70"
-                class="image"
-              />
+              <img v-lazy="user.avatarUrl" width="70" height="70" class="image" />
               <div class="nickname">{{ user.nickname }}</div>
               <div class="signature">{{ user.signature }}</div>
             </div>
@@ -82,18 +77,20 @@ export default {
           .then(res => {
             if (res.data.data.code === ERR_OK) {
               this.setUser(res.data.data.profile);
-              getUserPlayList(this.user.userId).then(res => {
-                if (res.data.code === ERR_OK) {
-                  this.isLoading = false;
-                  this.playList = res.data.playlist;
-                }
-              }).catch(err => {
-                this.$message({
-                  type: "error",
-                  message: "加载歌单失败 请重试"
+              getUserPlayList(this.user.userId)
+                .then(res => {
+                  if (res.data.code === ERR_OK) {
+                    this.isLoading = false;
+                    this.playList = res.data.playlist;
+                  }
+                })
+                .catch(err => {
+                  this.$message({
+                    type: "error",
+                    message: "加载歌单失败 请重试"
+                  });
+                  console.log(err);
                 });
-                console.log(err);
-              })
             }
           })
           .catch(err => {
@@ -176,22 +173,6 @@ export default {
   overflow: hidden;
   background-color: #eee;
   z-index: 98;
-
-  &.user-fade-enter-active,
-  &.user-fade-leave-active {
-    transition: opacity 0.3s;
-    .user-wrapper {
-      transition: all 0.3s;
-    }
-  }
-
-  &.user-fade-enter,
-  &.user-fade-leave-to {
-    opacity: 0;
-    .user-wrapper {
-      transform: translate3d(-100%, 0, 0);
-    }
-  }
 
   .list-view {
     height: 100%;

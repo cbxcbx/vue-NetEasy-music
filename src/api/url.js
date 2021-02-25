@@ -1,4 +1,7 @@
 export default {
+  /*
+  *  登录注册相关
+  */
   // 发送验证码
   CAPTCHA_SENT: '/captcha/sent',
 
@@ -14,6 +17,9 @@ export default {
   // 退出登录
   LOGOUT: '/logout',
 
+  /*
+  *  获取歌单，歌手，歌曲
+  */
   // 获取用户歌单
   GET_USER_PLAYLIST: '/user/playlist',
 
@@ -51,5 +57,10 @@ export default {
   GET_RANK_LIST: '/toplist',
 
   // 获取歌单(榜单)详情
-  GET_PLAY_LIST_DETAIL: '/playlist/detail'
+  GET_PLAY_LIST_DETAIL: '/playlist/detail',
+
+  /*
+  *  搜索相关
+  */
+  GET_SEARCH_HOT: '/search/hot'
 }

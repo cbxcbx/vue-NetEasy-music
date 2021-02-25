@@ -10,6 +10,7 @@ const Welcome = () => import('@/welcome/welcome');
 const Recommend = () => import('@/recommend/recommend');
 const Singer = () => import('@/singer/singer');
 const Rank = () => import('@/rank/rank');
+const Search = () => import('@/search/search');
 const toplistDetail = () => import("@/toplist-detail/toplist-detail");
 const SingerDetail = () => import('@/singer-detail/singer-detail');
 
@@ -48,6 +49,16 @@ const routes = [
         ]
       },
       {
+        path: '/rank',
+        component: Rank,
+        children: [
+          {
+            path: ':id',
+            component: toplistDetail
+          }
+        ]
+      },
+      {
         path: '/singer',
         component: Singer,
         children: [
@@ -58,14 +69,9 @@ const routes = [
         ]
       },
       {
-        path: '/rank',
-        component: Rank,
-        children: [
-          {
-            path: ':id',
-            component: toplistDetail
-          }
-        ]
+        path: '/search',
+        name: 'search',
+        component: Search
       },
       {
         path: '/my-playlist/:id',

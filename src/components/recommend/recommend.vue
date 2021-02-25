@@ -46,7 +46,7 @@
 
 <script>
 import Scroll from "base/scroll/scroll";
-import Search from "@/search/search";
+import Search from "@/search-input/search-input";
 import loading from "base/loading/loading";
 import { getAlbum, getRecommendSongs } from "api/discovery";
 import { ERR_OK } from "api/config";
