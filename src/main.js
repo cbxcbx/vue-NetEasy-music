@@ -7,7 +7,7 @@ import fastclick from 'fastclick'
 import VueLazyload from 'vue-lazyload'
 
 import 'element-ui/lib/theme-chalk/index.css';
-// import 'assets/font-icon/iconfont.css'
+import 'assets/font-icon/iconfont.css'
 import 'common/style/index.scss'
 
 fastclick.attach(document.body)
