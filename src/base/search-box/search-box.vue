@@ -1,7 +1,7 @@
 <template>
   <div class="search-box">
     <i class="iconfont icon-chazhao"></i>
-    <input type="text" class="search-input" :placeholder="placeholder" v-model="query" />
+    <input type="text" class="search-input" :placeholder="placeholder" v-model="query" ref="query"/>
     <i class="iconfont icon-guanbi" v-show="query" @click="clear"></i>
   </div>
 </template>

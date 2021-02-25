@@ -3,12 +3,12 @@
     <div class="search">
       <div class="search-wrapper">
         <div class="back">
-          <i class="iconfont icon-back" @click="hide"></i>
+          <i class="iconfont icon-back" @click="back"></i>
         </div>
         <div class="search-box-wrapper">
           <search-box ref="searchBox" @query="onQueryChange"></search-box>
         </div>
-        <div class="shortcut-wrapper">
+        <div class="shortcut-wrapper" v-show="!query">
           <scroll :data="hotKey" class="shortcut">
             <div>
               <div class="hot-key">
@@ -27,25 +27,35 @@
               <div class="search-history" v-show="searchHistory.length">
                 <h1 class="title">
                   <span class="text">搜索历史</span>
-                  <span class="clear">
+                  <span class="clear" @click="showConfirm">
                     <i class="iconfont icon-aaaziyuan"></i>
                   </span>
                 </h1>
-                <search-list :searches="searchHistory"></search-list>
+                <search-list
+                  @delete="deleteSearchHistory"
+                  @select="addQuery"
+                  :searches="searchHistory"
+                ></search-list>
               </div>
             </div>
           </scroll>
         </div>
-        <div class="search-result"></div>
+        <div class="search-result" v-show="query">
+          <suggest @listScroll="blurInput" :query="query" @select="saveSearch" ref="suggest"></suggest>
+        </div>
+        <confirm ref="confirm" @confirm="clearSearchHistory" text="是否清空所有搜索历史" confirmBtnText="清空"></confirm>
       </div>
     </div>
   </transition>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import Scroll from "base/scroll/scroll";
 import searchBox from "base/search-box/search-box";
 import searchList from "base/search-list/search-list";
+import confirm from "base/confirm/confirm";
+import suggest from "@/suggest/suggest";
 import { getSearchHot } from "api/search";
 import { ERR_OK } from "api/config";
 import { searchMixin } from "common/js/mixin/mixin";
@@ -57,7 +67,7 @@ export default {
     };
   },
   methods: {
-    hide() {
+    back() {
       this.$router.back();
     },
     _getHotKey() {
@@ -66,7 +76,11 @@ export default {
           this.hotKey = res.data.result.hots;
         }
       });
-    }
+    },
+    showConfirm() {
+      this.$refs.confirm.show();
+    },
+    ...mapActions(["clearSearchHistory"])
   },
   computed: {
     shortcut() {
@@ -76,7 +90,9 @@ export default {
   components: {
     Scroll,
     searchBox,
-    searchList
+    searchList,
+    confirm,
+    suggest
   },
   created() {
     this._getHotKey();
@@ -130,6 +146,30 @@ export default {
         color: $color-gray;
       }
     }
+    .search-history {
+      position: relative;
+      margin: 0 20px;
+      .title {
+        display: flex;
+        align-items: center;
+        height: 40px;
+        font-size: $font-size-medium;
+        color: $color-gray;
+      }
+      .text {
+        flex: 1;
+      }
+      .clear {
+        color: $color-gray;
+      }
+    }
+  }
+
+  .search-result {
+    position: fixed;
+    top: 133px;
+    bottom: 0;
+    width: 100%;
   }
 }
 </style>

@@ -55,6 +55,15 @@ export function createSong(music) {
   })
 }
 
+export function createSearchSong (music) {
+  return new Song({
+    id: music.id,
+    singer: singerName(music.artists),
+    name: music.name,
+    album: music.album.name
+  })
+}
+
 export function processSongsUrl(songs) {
   if (!songs.length) {
     return Promise.resolve(songs);

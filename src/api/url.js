@@ -62,5 +62,9 @@ export default {
   /*
   *  搜索相关
   */
+  // 搜索关键字
+  SEARCH: '/search',
+
+  // 热搜列表
   GET_SEARCH_HOT: '/search/hot'
 }

@@ -25,4 +25,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "common/style/variable.scss";
+.search-list {
+  .search-item {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    overflow: hidden;
+    .text {
+      flex: 1;
+      color: $color-gray;
+    }
+    .icon {
+      position: relative;
+      .iconfont {
+        font-size: $font-size-small;
+        color: $color-gray;
+      }
+    }
+  }
+}
 </style>
