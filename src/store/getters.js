@@ -22,6 +22,8 @@ export const currentIndex = state => state.currentIndex;
 
 export const favoriteList = state => state.favoriteList;
 
+export const searchHistory = state => state.searchHistory;
+
 export const currentSong = (state) => {
   return state.playlist[state.currentIndex] || {};
 }
