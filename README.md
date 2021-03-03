@@ -6,7 +6,7 @@ UI 界面参考了网易云音乐以及自己的改版。
 灵感来自己黄轶老师的vue-music课程，不过老师使用的是qq音乐的接口，而这个是使用的网易云音乐真实的接口。
 由[Binaryify](https://github.com/Binaryify)提供的 [NeteaseCloudMusicApi](https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=neteasecloudmusicapi)。
 
-项目演示地址：[vue-NetEasy-music]http://218.244.159.175/)
+项目演示地址：[vue-NetEasy-music](http://218.244.159.175/)
 
 - 推荐使用手机预览，电脑在 Chrome 调试模式效果更佳，开启调试模式的手机模式后，如果不能滚动，需要手动刷新一下页面
 
